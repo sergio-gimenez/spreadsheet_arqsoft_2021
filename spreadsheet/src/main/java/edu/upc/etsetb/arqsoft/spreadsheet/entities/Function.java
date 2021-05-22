@@ -9,6 +9,6 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author osboxes
  */
-public interface Function extends Argument, Operand{
+public class Function implements Operand, Argument { // TODO Abstract class maybe?
     
 }

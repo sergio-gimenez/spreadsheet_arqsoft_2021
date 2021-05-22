@@ -9,12 +9,11 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author osboxes
  */
-public class Number {
-
-    private int value; // TODO datatype del número?
-
-    public int getValue() {
-        return value;
+public class Range extends Coordinate implements Argument{
+    
+    public Range(String column, int row) {
+        super(column, row);
     }
-
+    
+    
 }

@@ -5,10 +5,14 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.List;
+
 /**
  *
  * @author osboxes
  */
-public interface Formula extends Content{
+public class Formula implements Content{
+    
+    private List <FormulaComponentImpl> formulaComponentList;
     
 }

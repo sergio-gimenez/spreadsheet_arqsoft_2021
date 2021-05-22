@@ -5,16 +5,13 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.List;
+
 /**
  *
  * @author osboxes
  */
-public class Number {
-
-    private int value; // TODO datatype del número?
-
-    public int getValue() {
-        return value;
-    }
-
+public class UserInterfaceImpl implements UserInterface{
+    
+    private List<String> uiOptions;
 }

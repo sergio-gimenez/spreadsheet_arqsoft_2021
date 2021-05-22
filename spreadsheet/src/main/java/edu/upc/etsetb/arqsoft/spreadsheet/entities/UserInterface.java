@@ -9,12 +9,6 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author osboxes
  */
-public class Number {
-
-    private int value; // TODO datatype del número?
-
-    public int getValue() {
-        return value;
-    }
-
+public interface UserInterface {
+    
 }
