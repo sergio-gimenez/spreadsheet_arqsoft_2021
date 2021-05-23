@@ -128,13 +128,24 @@ public class Tokenizer {
         tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", 8); // variable
 
         try {
-            tokenizer.tokenize("5+2/(3-8)^5^2");
+            tokenizer.tokenize("1+2+3-1*2");
 
             LinkedList<Token> tokens = tokenizer.getTokens();
+            String infix = "";
 
             for (Token tok : tokens) {
                 System.out.println("" + tok.token + " " + tok.sequence);
+                infix = infix + tok.sequence;
             }
+
+            String postfix = ShuntingYard.infixToRpn(infix);
+
+            System.out.println("\nPostfix:\n" + postfix);
+            
+            int res = ShuntingYard.evaluatePostfix(postfix);
+
+            System.out.println("\nEvaluated postfix = " + res);
+
         } catch (ParserException e) {
             System.out.println(e.getMessage());
         }
