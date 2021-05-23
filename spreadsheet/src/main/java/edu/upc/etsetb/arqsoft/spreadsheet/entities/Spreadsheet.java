@@ -5,10 +5,20 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.HashMap;
+
 /**
  *
  * @author osboxes
  */
 public interface Spreadsheet {
+    
+    public Cell getCell(Coordinate coordinate);
+    
+    public void setContent(Coordinate coordinate, String content);
+    
+    public Content getContent (Cell cell);
+    
+    public HashMap<Coordinate, Cell> getCellMap();
     
 }
