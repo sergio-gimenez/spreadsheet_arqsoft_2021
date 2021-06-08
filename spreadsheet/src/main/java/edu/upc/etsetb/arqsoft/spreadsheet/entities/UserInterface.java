@@ -10,5 +10,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  * @author osboxes
  */
 public interface UserInterface {
+    public void createNewSpreadsheet(String command);
+    
     
 }

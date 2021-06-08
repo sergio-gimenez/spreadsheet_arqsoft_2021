@@ -15,15 +15,15 @@ public class SpreadsheetImpl implements Spreadsheet{
     
     private HashMap<Coordinate, Cell> cellMap;
 
-    public SpreadsheetImpl(HashMap<Coordinate, Cell> cellMap) {
-        this.cellMap = cellMap;
+    public SpreadsheetImpl() {
+        this.cellMap = new HashMap<Coordinate, Cell>();
     }
     
     
 
     @Override
     public Cell getCell(Coordinate coordinate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.cellMap.get(coordinate);
     }
 
     @Override
@@ -33,12 +33,12 @@ public class SpreadsheetImpl implements Spreadsheet{
 
     @Override
     public Content getContent(Cell cell) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public HashMap<Coordinate, Cell> getCellMap() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return cellMap;
     }
     
 }

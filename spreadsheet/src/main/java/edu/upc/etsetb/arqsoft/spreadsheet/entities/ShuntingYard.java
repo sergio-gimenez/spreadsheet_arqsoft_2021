@@ -144,10 +144,4 @@ public class ShuntingYard {
         }
         return stack.pop();
     }
-
-//    // Driver program to test above functions
-//    public static void main(String[] args) {
-//        String exp = "231*+9-";
-//        System.out.println("postfix evaluation: " + evaluatePostfix(exp));
-//    }
 }
