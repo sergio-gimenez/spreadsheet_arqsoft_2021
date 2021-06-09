@@ -21,7 +21,7 @@ public class MinFunction extends Function{
                 min = arg.getValue();
             }
         }
-        return mins;
+        return min;
     }
     @Override
     public float getValue() {

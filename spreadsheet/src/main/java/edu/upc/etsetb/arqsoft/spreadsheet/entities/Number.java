@@ -9,11 +9,12 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author osboxes
  */
-public class Number {
+public class Number implements Argument, Operand, Content {
 
-    private int value; // TODO datatype del número?
+    private float value; 
 
-    public int getValue() {
+    @Override
+    public float getValue() {
         return value;
     }
 
