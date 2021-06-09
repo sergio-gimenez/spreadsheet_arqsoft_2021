@@ -5,18 +5,16 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
-import java.util.ArrayList;
-
 /**
  *
- * @author osboxes
+ * @author sergio
  */
-public interface Function extends Operand, Argument {
+public class ArgumentImpl implements Argument {
 
-    public void addArgument(Argument argument);
+    float value;
 
-    public String getName();
-
-    public float getValue();
-
+    @Override
+    public float getValue() {
+        return value;
+    }
 }

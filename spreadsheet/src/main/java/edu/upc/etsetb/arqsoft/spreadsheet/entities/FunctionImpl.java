@@ -9,14 +9,13 @@ import java.util.ArrayList;
 
 /**
  *
- * @author osboxes
+ * @author sergio
  */
-public interface Function extends Operand, Argument {
+public abstract class FunctionImpl implements Function {
 
-    public void addArgument(Argument argument);
+    protected ArrayList<Argument> argumentsArrayList;
 
-    public String getName();
-
-    public float getValue();
-
+    public FunctionImpl() {
+        argumentsArrayList = new ArrayList<Argument>();
+    }
 }

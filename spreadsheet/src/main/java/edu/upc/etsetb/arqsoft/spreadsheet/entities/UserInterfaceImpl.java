@@ -14,4 +14,9 @@ import java.util.List;
 public class UserInterfaceImpl implements UserInterface{
     
     private List<String> uiOptions;
+
+    @Override
+    public void createNewSpreadsheet(String command) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -34,6 +34,8 @@ public class SpreadsheetImpl implements Spreadsheet{
     @Override
     public Content getContent(Cell cell) {
         
+        return null;
+        
     }
 
     @Override
