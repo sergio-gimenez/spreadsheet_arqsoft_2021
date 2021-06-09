@@ -19,8 +19,6 @@ public class SpreadsheetImpl implements Spreadsheet{
         this.cellMap = new HashMap<Coordinate, Cell>();
     }
     
-    
-
     @Override
     public Cell getCell(Coordinate coordinate) {
         return this.cellMap.get(coordinate);

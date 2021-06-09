@@ -11,12 +11,10 @@ import java.util.ArrayList;
  *
  * @author osboxes
  */
-public interface Function extends Operand, Argument {
-
-    public void addArgument(Argument argument);
-
-    public String getName();
-
-    public float getValue();
-
+public abstract class Function implements Operand, Argument {
+    
+    public ArrayList<Argument> args;
+    
+    abstract float processFunction(ArrayList<Argument> args);
+    
 }

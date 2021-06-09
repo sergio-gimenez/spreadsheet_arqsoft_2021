@@ -5,16 +5,26 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sergio
  */
-public class ArgumentImpl implements Argument {
+public class SumFunction extends Function {
 
-    float value;
+    @Override
+    float processFunction(ArrayList<Argument> args) {
+        float sum = 0;
+        for(Argument arg: args){
+            sum += arg.getValue();
+        }
+        return sum;
+    }
 
     @Override
     public float getValue() {
-        return value;
+        return this.processFunction(args);
     }
+
 }

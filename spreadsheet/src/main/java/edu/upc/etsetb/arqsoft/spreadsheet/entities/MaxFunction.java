@@ -11,22 +11,22 @@ import java.util.ArrayList;
  *
  * @author sergio
  */
-public class AvgFunction extends Function {
+public class MaxFunction extends Function {
+
+    @Override
+    float processFunction(ArrayList<Argument> args) {
+        float max = 0;
+        for (Argument arg : args) {
+            if (max < arg.getValue()) {
+                max = arg.getValue();
+            }
+        }
+        return max;
+    }
 
     @Override
     public float getValue() {
         return this.processFunction(args);
     }
 
-    @Override
-    float processFunction(ArrayList<Argument> args) {
-        float res = 0;
-        for (Argument arg : args) {
-            res += arg.getValue();
-        }
-        res = res / args.size();
-        return res;
-    }
-    
-    
 }
