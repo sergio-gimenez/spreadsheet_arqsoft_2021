@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.regex.*;
+
 /**
  *
  * @author osboxes
@@ -17,6 +19,15 @@ public class Coordinate {
     public Coordinate(String column, int row) {
         this.column = column;
         this.row = row;
+    }
+
+    public boolean isCoordinateValid(String coordinate) {
+        // Regex that validates if the coordinate follows the 
+        // pattern [letter(s),number(s)]
+        Pattern pattern = Pattern.compile("^[a-zA-Z]+\\d+$"); // TODO mayusculas y minusculas?
+
+        Matcher matcher = pattern.matcher(coordinate);
+        return matcher.matches();
     }
 
     public String getColumn() {

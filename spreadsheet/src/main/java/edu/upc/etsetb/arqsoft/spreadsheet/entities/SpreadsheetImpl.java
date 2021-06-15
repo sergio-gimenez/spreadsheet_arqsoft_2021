@@ -23,10 +23,16 @@ public class SpreadsheetImpl implements Spreadsheet{
     public Cell getCell(Coordinate coordinate) {
         return this.cellMap.get(coordinate);
     }
+    
 
     @Override
     public void setContent(Coordinate coordinate, String content) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        
+        Cell cell = new 
+        
+        cellMap.put(coordinate, );
     }
 
     @Override

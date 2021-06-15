@@ -141,7 +141,7 @@ public class Tokenizer {
             String postfix = ShuntingYard.infixToRpn(infix);
 
             System.out.println("\nPostfix:\n" + postfix);
-            
+
             int res = ShuntingYard.evaluatePostfix(postfix);
 
             System.out.println("\nEvaluated postfix = " + res);
