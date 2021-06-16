@@ -21,15 +21,6 @@ public class Coordinate {
         this.row = row;
     }
 
-    public boolean isCoordinateValid(String coordinate) {
-        // Regex that validates if the coordinate follows the 
-        // pattern [letter(s),number(s)]
-        Pattern pattern = Pattern.compile("^[a-zA-Z]+\\d+$"); // TODO mayusculas y minusculas?
-
-        Matcher matcher = pattern.matcher(coordinate);
-        return matcher.matches();
-    }
-
     public String getColumn() {
         return column;
     }

@@ -5,16 +5,18 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
-import java.util.List;
-
 /**
  *
- * @author osboxes
+ * @author sergio
  */
-public class Formula implements Content{
-    
-    private List <FormulaComponentImpl> formulaComponentList;
-    
-    
-    
+public class MalformedCoordinateException extends Exception {
+
+    public MalformedCoordinateException() {
+
+    }
+
+    public MalformedCoordinateException(String msg) {
+        super(msg);
+    }
+
 }
