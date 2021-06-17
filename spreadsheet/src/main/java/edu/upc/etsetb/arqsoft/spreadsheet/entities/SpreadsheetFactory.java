@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.List;
+
 /**
  *
  * @author gerard
@@ -18,8 +20,14 @@ public abstract class SpreadsheetFactory {
         } else {
             throw new UnknownFactoryExcepcion("Unknown factory of type " + type);
         }
-    } 
+    }
 
+    public abstract Number createNumber(Float number);
+
+    public abstract Text createText(String content);
+    
+    public abstract Formula createFormula(List<Token> tokens);      
+    
     public abstract Tokenizer getTokenizerInstance();
 
 }

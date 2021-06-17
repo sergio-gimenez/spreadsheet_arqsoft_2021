@@ -9,6 +9,11 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author osboxes
  */
-public interface Text extends Content{
-    
+public class Text implements Content {
+
+    private String value;
+
+    public Text(String value) {
+        this.value = value;
+    }
 }

@@ -11,9 +11,11 @@ import java.util.List;
  *
  * @author osboxes
  */
-public class Formula implements Content{
+public abstract class Formula implements Content{
     
     private List <FormulaComponentImpl> formulaComponentList;
+    
+    
     
     
     

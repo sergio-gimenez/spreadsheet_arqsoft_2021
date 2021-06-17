@@ -45,31 +45,37 @@ public class SpreadsheetImpl implements Spreadsheet {
         if (strContent.charAt(0) == '=') {
             String formula = strContent.substring(1);
             Tokenizer tokenizer = factory.getTokenizerInstance();
-            
+
             try {
                 tokenizer.tokenize(formula);
                 LinkedList<Token> tokens = tokenizer.getTokens();
-            String infix = "";
+                String infix = "";
 
-            for (Token tok : tokens) {
-                System.out.println("" + tok.token + " " + tok.sequence);
-                infix = infix + tok.sequence;
-            }
-             
+                for (Token tok : tokens) {
+                    System.out.println("" + tok.token + " " + tok.sequence);
+                    infix = infix + tok.sequence;
+                }
+
             } catch (Tokenizer.ParserException ex) {
                 //TODO: Hace falta una exception por cada uno?
                 throw new InvalidFormulaException(ex.getMessage());
             }
-            
-         
 
         } else {
-            throw new InvalidFormulaException("Formula does not start with '='");
+
+            try {
+                Float number = Float.parseFloat(strContent);
+                return factory.createNumber(number);
+
+            } catch (NumberFormatException ex) {
+                return factory.createText(strContent);
+            }
         }
+        return null;
     }
 
     @Override
-    public void setContent(String coordinate, String content) throws MalformedCoordinateException {
+    public void setContent(String coordinate, String content) throws MalformedCoordinateException, InvalidFormulaException {
 
         if (isCoordinateValid(coordinate)) {
             Content classifiedContent = processStringToContent(content);

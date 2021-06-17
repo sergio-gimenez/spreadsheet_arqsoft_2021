@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.List;
+
 /**
  *
  * @author gerard
@@ -14,6 +16,21 @@ public class DefaultSpreadsheetFactory extends SpreadsheetFactory {
     @Override
     public Tokenizer getTokenizerInstance() {
         return TokenizerGenerator.getInstance();
+    }
+
+    @Override
+    public Number createNumber(Float number) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String createText(String content) {
+         
+    }
+
+    @Override
+    public Formula createFormula(List<Token> tokens) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
