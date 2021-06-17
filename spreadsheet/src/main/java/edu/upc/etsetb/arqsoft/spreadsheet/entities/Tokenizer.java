@@ -14,9 +14,9 @@ import java.util.regex.Pattern;
  *
  * @author osboxes
  */
-public class Tokenizer {
+public final class Tokenizer {
 
-    public class ParserException extends RuntimeException {
+    public class ParserException extends Exception {
 
         public ParserException(String msg) {
             super(msg);
@@ -37,7 +37,7 @@ public class Tokenizer {
                         Pattern.compile("^(" + regex + ")"), token));
     }
 
-    public void tokenize(String str) {
+    public void tokenize(String str) throws ParserException {
         String s = str.trim();
         tokens.clear();
         while (!s.equals("")) {
@@ -125,12 +125,11 @@ public class Tokenizer {
         tokenizer.add("[*/]", 5); // mult or divide
         tokenizer.add("\\^", 6); // raised
         tokenizer.add("[0-9]+", 7); // integer number
-        tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", 8); // variable
-        tokenizer.add("[a-zA-Z]+\\\\d+", 9); //cell
-        tokenizer.add("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+", 10); //range
+        tokenizer.add("[a-zA-Z]+\\\\d+", 8); //cell
+        tokenizer.add("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+", 9); //Cell Range
 
         try {
-            tokenizer.tokenize("1+2+(3-1)*2+A12*B14");
+            tokenizer.tokenize("1+2+(3-1)*2+4");
 
             LinkedList<Token> tokens = tokenizer.getTokens();
             String infix = "";
@@ -139,14 +138,14 @@ public class Tokenizer {
                 System.out.println("" + tok.token + " " + tok.sequence);
                 infix = infix + tok.sequence;
             }
-            
+
             String postfix = ShuntingYard.infixToRpn(infix);
 
             System.out.println("\nPostfix:\n" + postfix);
-//
-//            int res = ShuntingYard.evaluatePostfix(postfix);
-//
-//            System.out.println("\nEvaluated postfix = " + res);
+
+            int res = ShuntingYard.evaluatePostfix(postfix);
+
+            System.out.println("\nEvaluated postfix = " + res);
 
         } catch (ParserException e) {
             System.out.println(e.getMessage());

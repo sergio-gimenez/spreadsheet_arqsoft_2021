@@ -6,6 +6,9 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,9 +18,11 @@ import java.util.regex.Pattern;
  */
 public class SpreadsheetImpl implements Spreadsheet {
 
+    private SpreadsheetFactory factory;
     private HashMap<Coordinate, Cell> cellMap;
 
-    public SpreadsheetImpl() {
+    public SpreadsheetImpl(SpreadsheetFactory factory) {
+        this.factory = factory;
         this.cellMap = new HashMap<Coordinate, Cell>();
     }
 
@@ -36,15 +41,38 @@ public class SpreadsheetImpl implements Spreadsheet {
         return matcher.matches();
     }
 
-    public Content processStringToContent(String strContent){
-        
+    public Content processStringToContent(String strContent) throws InvalidFormulaException {
+        if (strContent.charAt(0) == '=') {
+            String formula = strContent.substring(1);
+            Tokenizer tokenizer = factory.getTokenizerInstance();
+            
+            try {
+                tokenizer.tokenize(formula);
+                LinkedList<Token> tokens = tokenizer.getTokens();
+            String infix = "";
+
+            for (Token tok : tokens) {
+                System.out.println("" + tok.token + " " + tok.sequence);
+                infix = infix + tok.sequence;
+            }
+             
+            } catch (Tokenizer.ParserException ex) {
+                //TODO: Hace falta una exception por cada uno?
+                throw new InvalidFormulaException(ex.getMessage());
+            }
+            
+         
+
+        } else {
+            throw new InvalidFormulaException("Formula does not start with '='");
+        }
     }
 
     @Override
     public void setContent(String coordinate, String content) throws MalformedCoordinateException {
 
         if (isCoordinateValid(coordinate)) {
-
+            Content classifiedContent = processStringToContent(content);
         } else {
             throw new MalformedCoordinateException("Wrong format for coordinate");
         }
