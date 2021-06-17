@@ -15,6 +15,8 @@ import java.util.Stack;
 // Importing specific character class as
 // dealing with only operators and operands
 import java.lang.Character;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShuntingYard {
 
@@ -45,63 +47,60 @@ public class ShuntingYard {
 
     // Method converts given infixto postfix expression
     // to illustrate shunting yard algorithm
-    static String infixToRpn(String expression) {
-        // Initalising an empty String
-        // (for output) and an empty stack
-        Stack<Character> stack = new Stack<>();
+    static List<Token> infixToRpn(List<Token> tokens) throws InvalidFormulaException {
 
-        // Initially empty string taken
-        String output = new String("");
+        // Initalising an empty stack
+        Stack<Token> stack = new Stack<>();
+        ArrayList<Token> outputList = new ArrayList<Token>();
 
-        // Iterating ovet tokens using inbuilt
-        // .length() functon
-        for (int i = 0; i < expression.length(); ++i) {
-            // Finding character at 'i'th index
-            char c = expression.charAt(i);
+        for (Token token : tokens) {
+
+            // TODO Check if is function or cell
+            char c = token.sequence.charAt(0);
 
             // If the scanned Token is an
             // operand, add it to output
             if (letterOrDigit(c)) {
-                output += c;
+                outputList.add(token);
             } // If the scanned Token is an '('
             // push it to the stack
             else if (c == '(') {
-                stack.push(c);
+                stack.push(token);
             } // If the scanned Token is an ')' pop and append
             // it to output from the stack until an '(' is
             // encountered
             else if (c == ')') {
                 while (!stack.isEmpty()
-                        && stack.peek() != '(') {
-                    output += stack.pop();
+                        && stack.peek().sequence.charAt(0) != '(') {
+                    outputList.add(stack.pop());
                 }
 
                 stack.pop();
             } // If an operator is encountered then taken the
-            // furthur action based on the precedence of the
+            // further action based on the precedence of the
             // operator
             else {
                 while (!stack.isEmpty()
                         && getPrecedence(c)
-                        <= getPrecedence(stack.peek())) {
+                        <= getPrecedence(stack.peek().sequence.charAt(0))) {
                     // peek() inbuilt stack function to
                     // fetch the top element(token)
 
-                    output += stack.pop();
+                    outputList.add(stack.pop());
                 }
-                stack.push(c);
+                stack.push(token);
             }
         }
 
         // pop all the remaining operators from
         // the stack and append them to output
         while (!stack.isEmpty()) {
-            if (stack.peek() == '(') {
-                return "This expression is invalid";
+            if (stack.peek().sequence.charAt(0) == '(') {
+                throw new InvalidFormulaException("The expression is invalid");
             }
-            output += stack.pop();
+            outputList.add(stack.pop());
         }
-        return output;
+        return outputList;
     }
 
     // Method to evaluate value of a postfix expression

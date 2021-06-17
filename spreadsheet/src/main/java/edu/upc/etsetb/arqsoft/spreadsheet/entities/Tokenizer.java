@@ -5,8 +5,11 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -132,19 +135,24 @@ public final class Tokenizer {
             tokenizer.tokenize("1+2+(3-1)*2+4");
 
             LinkedList<Token> tokens = tokenizer.getTokens();
-            String infix = "";
 
-            for (Token tok : tokens) {
-                System.out.println("" + tok.token + " " + tok.sequence);
-                infix = infix + tok.sequence;
+            ArrayList<Token> postfix = new ArrayList<>();
+            try {
+                postfix = (ArrayList<Token>) ShuntingYard.infixToRpn(tokens);
+            } catch (InvalidFormulaException ex) {
             }
 
-            String postfix = ShuntingYard.infixToRpn(infix);
+            String infix = "";
+            String strPostfix = "";
+            for (Token token : postfix) {
+                System.out.println("" + token.token + " " + token.sequence);
+                strPostfix += token.sequence;
+            }
 
-            System.out.println("\nPostfix:\n" + postfix);
-
-            int res = ShuntingYard.evaluatePostfix(postfix);
-
+            System.out.println("\nPostfix:\n" + strPostfix);
+            
+            
+            int res = ShuntingYard.evaluatePostfix(strPostfix);
             System.out.println("\nEvaluated postfix = " + res);
 
         } catch (ParserException e) {
