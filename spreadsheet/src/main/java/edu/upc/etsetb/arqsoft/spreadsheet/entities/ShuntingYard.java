@@ -54,6 +54,10 @@ public class ShuntingYard {
             return -1;
         }
     }
+    
+    static boolean hasHigherPrecedence(Token curToken, Token stackToken){
+        return ()
+    }
 
     // Method converts given infixto postfix expression
     // to illustrate shunting yard algorithm
@@ -68,76 +72,52 @@ public class ShuntingYard {
             // If the scanned Token is an operand, add it to output
             if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.CELL) || token.isOfType(TokenEnum.RANGE)) {
                 outputList.add(token);
-            } else if (token.isOfType(TokenEnum.FUNCTION)) {
-                stack.push(token);
-            } 
-            else if (token.isOfType(TokenEnum.COMMA)) {
-                while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    outputList.add(stack.pop());
-                }
-            } else if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                stack.push(token);
-            } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
-                while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    outputList.add(stack.pop());
-                }
-                stack.pop();
-            } else {
-                char c = token.sequence.charAt(0);
+            }
 
+            if (token.isOfType(TokenEnum.FUNCTION)) {
+                stack.push(token);
+            }
+
+            if (token.isOfType(TokenEnum.OPERATOR)) {
                 while (!stack.isEmpty()
-                        && getPrecedence(c)
+                        && stack.peek().isOfType(TokenEnum.OPERATOR)
+                        && getPrecedence(token.sequence.charAt(0))
                         <= getPrecedence(stack.peek().sequence.charAt(0))) {
-                    // peek() inbuilt stack function to
-                    // fetch the top element(token)
-
+                    
                     outputList.add(stack.pop());
                 }
                 stack.push(token);
             }
 
-//            char c = token.sequence.charAt(0);
-//            // If the scanned Token is an '('
-//            // push it to the stack
-//            else if (c == '(') {
-//                stack.push(token);
-//            } // If the scanned Token is an ')' pop and append
-//            // it to output from the stack until an '(' is
-//            // encountered
-//            else if (c == ')') {
-//                while (!stack.isEmpty()
-//                        && stack.peek().sequence.charAt(0) != '(') {
-//                    outputList.add(stack.pop());
-//                }
-//                stack.pop();
-//            } 
-            // If an operator is encountered then taken the
-            // further action based on the precedence of the
-            // operator
-//            else {
-//                while (!stack.isEmpty()
-//                        && getPrecedence(c)
-//                        <= getPrecedence(stack.peek().sequence.charAt(0))) {
-//                    // peek() inbuilt stack function to
-//                    // fetch the top element(token)
-//
-//                    outputList.add(stack.pop());
-//                }
-//                stack.push(token);
-//            }
-//        }
+            if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                stack.push(token);
+            }
+
+            if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
+                while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                    outputList.add(stack.pop());
+                }
+                if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                    throw new InvalidFormulaException("Bracket mismatch in formula");
+                }
+                stack.pop();
+                if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
+                    outputList.add(stack.pop());
+                }
+            }
+
             // pop all the remaining operators from
             // the stack and append them to output
             while (!stack.isEmpty()) {
                 if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    throw new InvalidFormulaException("The expression is invalid");
+                    throw new InvalidFormulaException("Bracket mismatch in formula");
                 }
                 outputList.add(stack.pop());
             }
         }
         return outputList;
     }
-    // Method to evaluate value of a postfix expression
+// Method to evaluate value of a postfix expression
 
     static int evaluatePostfix(String exp) {
         //create a stack
