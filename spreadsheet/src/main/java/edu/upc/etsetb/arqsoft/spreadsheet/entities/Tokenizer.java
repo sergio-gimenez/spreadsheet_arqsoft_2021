@@ -34,10 +34,10 @@ public final class Tokenizer {
         tokens = new LinkedList<Token>();
     }
 
-    public void add(String regex, int token) {
+    public void add(String regex, TokenEnum type) {
         tokenInfos.add(
                 new TokenInfo(
-                        Pattern.compile("^(" + regex + ")"), token));
+                        Pattern.compile("^(" + regex + ")"), type));
     }
 
     public void tokenize(String str) throws ParserException {
@@ -51,7 +51,7 @@ public final class Tokenizer {
                     match = true;
                     String tok = m.group().trim();
                     s = m.replaceFirst("").trim();
-                    tokens.add(new Token(info.token, tok));
+                    tokens.add(new Token(info.type, tok));
                     break;
                 }
             }
@@ -121,18 +121,20 @@ public final class Tokenizer {
         * semi-colon character, comma, function name, and range.
          */
         Tokenizer tokenizer = new Tokenizer();
-        tokenizer.add("SUM|MIN|MAX|AVG", 1); // function
-        tokenizer.add("\\(", 2); // open bracket
-        tokenizer.add("\\)", 3); // close bracket
-        tokenizer.add("[+-]", 4); // plus or minus
-        tokenizer.add("[*/]", 5); // mult or divide
-        tokenizer.add("\\^", 6); // raised
-        tokenizer.add("[0-9]+", 7); // integer number
-        tokenizer.add("[a-zA-Z]+\\\\d+", 8); //cell
-        tokenizer.add("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+", 9); //Cell Range
+        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
+        tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
+        tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
+        tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
+        tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
+        tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
+        tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
+        tokenizer.add("[a-zA-Z]+\\\\d+", TokenEnum.CELL); //cell
+        tokenizer.add("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+", TokenEnum.RANGE); //Cell Range
+        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
+        
 
         try {
-            tokenizer.tokenize("1+2+(3-1)*2+4");
+            tokenizer.tokenize("1+2");
 
             LinkedList<Token> tokens = tokenizer.getTokens();
 
@@ -145,15 +147,15 @@ public final class Tokenizer {
             String infix = "";
             String strPostfix = "";
             for (Token token : postfix) {
-                System.out.println("" + token.token + " " + token.sequence);
+                System.out.println("" + token.type + " " + token.sequence);
                 strPostfix += token.sequence;
             }
 
             System.out.println("\nPostfix:\n" + strPostfix);
             
             
-            int res = ShuntingYard.evaluatePostfix(strPostfix);
-            System.out.println("\nEvaluated postfix = " + res);
+//            int res = ShuntingYard.evaluatePostfix(strPostfix);
+//            System.out.println("\nEvaluated postfix = " + res);
 
         } catch (ParserException e) {
             System.out.println(e.getMessage());

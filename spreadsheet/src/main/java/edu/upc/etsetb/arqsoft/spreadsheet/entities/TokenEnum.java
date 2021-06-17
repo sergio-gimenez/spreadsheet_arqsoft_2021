@@ -10,5 +10,5 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  * @author sergio
  */
 public enum TokenEnum {
-    NUMBER, CELL, RANGE, OPERATOR, LEFT_BRACKET, RIGHT_BRACKET, COMMA, 
+    NUMBER, CELL, RANGE, OPERATOR, LEFT_BRACKET, RIGHT_BRACKET, COMMA, FUNCTION
 }
