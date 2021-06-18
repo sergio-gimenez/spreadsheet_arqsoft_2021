@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import java.util.Objects;
 import java.util.regex.*;
 
 /**
@@ -27,6 +28,35 @@ public class Coordinate {
 
     public int getRow() {
         return row;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.column);
+        hash = 17 * hash + this.row;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coordinate other = (Coordinate) obj;
+        if (this.row != other.row) {
+            return false;
+        }
+        if (!Objects.equals(this.column, other.column)) {
+            return false;
+        }
+        return true;
     }
 
 }

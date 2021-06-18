@@ -44,19 +44,30 @@ public class ShuntingYard {
     // value will be returned
     static int getPrecedence(char ch) {
 
-        if (ch == '+' || ch == '-') {
-            return 1;
-        } else if (ch == '*' || ch == '/') {
-            return 2;
-        } else if (ch == '^') {
-            return 3;
-        } else {
-            return -1;
+        switch (ch) {
+            case '(':
+            case '[':
+            case '{':
+                return 0;
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+            case ')':
+            case ']':
+            case '}':
+                return 4;
+            default:
+                return -1;
         }
     }
-    
-    static boolean hasHigherPrecedence(Token curToken, Token stackToken){
-        return ()
+
+    static boolean hasHigherPrecedence(Token curToken, Token stackToken) throws Exception {
+        throw new Exception("Method not implemented");
     }
 
     // Method converts given infixto postfix expression
@@ -66,54 +77,78 @@ public class ShuntingYard {
         // Initalising an empty stack
         Stack<Token> stack = new Stack<>();
         ArrayList<Token> outputList = new ArrayList<>();
+        boolean isFunctionOpen = false;
+        int bracketLeftCount = 0;
+        int bracketRightCount = 0;
 
         for (Token token : tokens) {
 
             // If the scanned Token is an operand, add it to output
-            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.CELL) || token.isOfType(TokenEnum.RANGE)) {
+            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.CELL) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
                 outputList.add(token);
             }
 
             if (token.isOfType(TokenEnum.FUNCTION)) {
-                stack.push(token);
+//                stack.push(token);
+                outputList.add(token);
+                isFunctionOpen = true;
+                continue;
             }
 
-            if (token.isOfType(TokenEnum.OPERATOR)) {
-                while (!stack.isEmpty()
-                        && stack.peek().isOfType(TokenEnum.OPERATOR)
-                        && getPrecedence(token.sequence.charAt(0))
-                        <= getPrecedence(stack.peek().sequence.charAt(0))) {
-                    
-                    outputList.add(stack.pop());
+            if (isFunctionOpen) {
+                if (bracketLeftCount == 0 && !token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                    throw new InvalidFormulaException("Left bracket is missing in function");
+                } else {
+                    if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                        bracketLeftCount += 1;
+                    } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
+                        bracketLeftCount -= 1;
+                    }
+                    if (bracketLeftCount == 0) {
+                        Token delimiter = new Token(TokenEnum.DELIMITER, ";");
+                        outputList.add(delimiter);
+                        isFunctionOpen = false;
+                    }
                 }
-                stack.push(token);
-            }
+            } else {
+                if (token.isOfType(TokenEnum.OPERATOR)) {
 
-            if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                stack.push(token);
-            }
+                    while (!stack.isEmpty()
+                            && stack.peek().isOfType(TokenEnum.OPERATOR)
+                            && (getPrecedence(token.sequence.charAt(0))
+                            <= getPrecedence(stack.peek().sequence.charAt(0)))) {
 
-            if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
-                while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    outputList.add(stack.pop());
+                        outputList.add(stack.pop());
+                    }
+                    stack.push(token);
                 }
-                if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    throw new InvalidFormulaException("Bracket mismatch in formula");
-                }
-                stack.pop();
-                if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
-                    outputList.add(stack.pop());
-                }
-            }
 
-            // pop all the remaining operators from
-            // the stack and append them to output
-            while (!stack.isEmpty()) {
-                if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                    throw new InvalidFormulaException("Bracket mismatch in formula");
+                if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                    stack.push(token);
                 }
-                outputList.add(stack.pop());
+
+                if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
+                    while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                        outputList.add(stack.pop());
+                    }
+                    if (!stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                        throw new InvalidFormulaException("Bracket mismatch in formula");
+                    }
+                    stack.pop();
+                    if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
+                        outputList.add(stack.pop());
+                    }
+                }
             }
+        }
+
+        // pop all the remaining operators from
+        // the stack and append them to output
+        while (!stack.isEmpty()) {
+            if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                throw new InvalidFormulaException("Bracket mismatch in formula");
+            }
+            outputList.add(stack.pop());
         }
         return outputList;
     }
