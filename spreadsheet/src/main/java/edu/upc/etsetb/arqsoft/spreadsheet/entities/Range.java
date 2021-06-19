@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
+
 /**
  *
  * @author osboxes

@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
 import java.util.HashMap;
 
 /**

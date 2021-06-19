@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.function;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
 import java.util.ArrayList;
 
 /**
  *
  * @author sergio
  */
-public class SumFunction extends Function {
+public class MaxFunction extends Function {
 
     @Override
     float processFunction(ArrayList<Argument> args) {
-        float sum = 0;
-        for(Argument arg: args){
-            sum += arg.getValue();
+        float max = 0;
+        for (Argument arg : args) {
+            if (max < arg.getValue()) {
+                max = arg.getValue();
+            }
         }
-        return sum;
+        return max;
     }
 
     @Override

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.function;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Operand;
 import java.util.ArrayList;
 
 /**

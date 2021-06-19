@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenEnum;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
 import java.util.List;
 
 /**
@@ -12,22 +14,22 @@ import java.util.List;
  * @author gerard
  */
 public class TokenizerGenerator {
-    
-    private TokenizerGenerator(){
-    }    
-    
-    public static Tokenizer getInstance(){
+
+    private TokenizerGenerator() {
+    }
+
+    public static Tokenizer getInstance() {
         Tokenizer tokenizer = new Tokenizer();
-        
-        tokenizer.add("SUM|MIN|MAX|AVG", 1); // function
-        tokenizer.add("\\(", 2); // open bracket
-        tokenizer.add("\\)", 3); // close bracket
-        tokenizer.add("[+-]", 4); // plus or minus
-        tokenizer.add("[*/]", 5); // mult or divide
-        tokenizer.add("\\^", 6); // raised
-        tokenizer.add("[0-9]+", 7); // integer number
-        tokenizer.add("[a-zA-Z]+\\\\d+", 8); //cell
-        tokenizer.add("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+", 9); //Cell Range
+        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
+        tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
+        tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
+        tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
+        tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
+        tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
+        tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
+        tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
+        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.CELL); //cell
+        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
         return tokenizer;
     }
 }

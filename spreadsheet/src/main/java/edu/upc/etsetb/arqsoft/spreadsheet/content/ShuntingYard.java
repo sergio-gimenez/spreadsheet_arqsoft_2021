@@ -1,4 +1,4 @@
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,6 +11,8 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  */
 // Java Implemention of Shunting Yard Algorithm
 // Importing stack class for stacks DS
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenEnum;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
 import java.util.Stack;
 // Importing specific character class as
 // dealing with only operators and operands

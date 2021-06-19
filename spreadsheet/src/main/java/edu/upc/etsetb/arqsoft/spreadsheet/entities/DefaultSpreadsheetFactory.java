@@ -5,6 +5,10 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Formula;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Number;
 import java.util.List;
 
 /**

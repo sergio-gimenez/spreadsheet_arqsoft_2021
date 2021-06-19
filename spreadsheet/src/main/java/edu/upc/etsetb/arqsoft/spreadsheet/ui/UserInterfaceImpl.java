@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.ui.UserInterface;
 import java.util.List;
 
 /**

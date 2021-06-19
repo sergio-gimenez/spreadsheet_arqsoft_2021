@@ -5,8 +5,15 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.InvalidFormulaException;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.ShuntingYard;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -20,10 +27,12 @@ public class SpreadsheetImpl implements Spreadsheet {
 
     private SpreadsheetFactory factory;
     private HashMap<Coordinate, Cell> cellMap;
+    private Tokenizer tokenizer;
 
     public SpreadsheetImpl(SpreadsheetFactory factory) {
         this.factory = factory;
         this.cellMap = new HashMap<Coordinate, Cell>();
+        this.tokenizer = this.factory.getTokenizerInstance();
     }
 
     @Override
@@ -44,20 +53,14 @@ public class SpreadsheetImpl implements Spreadsheet {
     public Content processStringToContent(String strContent) throws InvalidFormulaException {
         if (strContent.charAt(0) == '=') {
             String formula = strContent.substring(1);
-            Tokenizer tokenizer = factory.getTokenizerInstance();
 
             try {
                 tokenizer.tokenize(formula);
-                LinkedList<Token> tokens = tokenizer.getTokens();
-                String infix = "";
-
-                for (Token tok : tokens) {
-                    System.out.println("" + tok.token + " " + tok.sequence);
-                    infix = infix + tok.sequence;
-                }
-
+                List<Token> tokens = tokenizer.getTokens();
+                List<Token> postfix = ShuntingYard.infixToRpn(tokens);
+                return factory.createFormula(postfix);
+                
             } catch (Tokenizer.ParserException ex) {
-                //TODO: Hace falta una exception por cada uno?
                 throw new InvalidFormulaException(ex.getMessage());
             }
 

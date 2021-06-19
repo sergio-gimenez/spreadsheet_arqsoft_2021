@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.token;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.InvalidFormulaException;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.ShuntingYard;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;

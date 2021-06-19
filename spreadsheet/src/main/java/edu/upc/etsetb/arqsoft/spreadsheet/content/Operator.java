@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content;
 
 /**
  *
  * @author osboxes
  */
-public interface Operand extends FormulaComponent{
+public class Operator implements FormulaComponent {
     
 }

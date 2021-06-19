@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.token;
 
 /**
  *
- * @author osboxes
+ * @author sergio
  */
-public interface Argument {
-
-    float getValue();
-
+public enum TokenEnum {
+    NUMBER, CELL, RANGE, OPERATOR, LEFT_BRACKET, RIGHT_BRACKET, COMMA, FUNCTION, DELIMITER
 }

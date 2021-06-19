@@ -5,29 +5,32 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
+
 /**
  *
  * @author osboxes
  */
 public class Cell {
-    
+
     private Content content;
-    private Coordinate coordinate;    
-    
-    public Cell (Content content, Coordinate coordinate){
+
+    public Cell(Content content) {
         this.content = content;
-        this.coordinate = coordinate;
     }
-    
-    public Content getContent(){
+
+    public Double getContentAsDouble() {
+        //    return content;
+        throw new Exception("Method not implemented")
+    }
+
+    public Content getContentAsString() {
         return content;
     }
-    
-    public String getFormula(){
+
+    public String getFormula() {
         return null;
         // TODO
     }
-    
-    
-    
+
 }

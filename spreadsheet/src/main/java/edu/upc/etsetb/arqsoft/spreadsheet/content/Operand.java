@@ -3,20 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
-
-import java.util.List;
+package edu.upc.etsetb.arqsoft.spreadsheet.content;
 
 /**
  *
  * @author osboxes
  */
-public abstract class Formula implements Content{
-    
-    private List <FormulaComponentImpl> formulaComponentList;
-    
-    
-    
-    
+public interface Operand extends FormulaComponent{
     
 }

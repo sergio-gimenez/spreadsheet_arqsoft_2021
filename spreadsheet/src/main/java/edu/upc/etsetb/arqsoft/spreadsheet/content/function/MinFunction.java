@@ -3,30 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.function;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
 import java.util.ArrayList;
 
 /**
  *
  * @author sergio
  */
-public class MaxFunction extends Function {
+public class MinFunction extends Function{
 
     @Override
     float processFunction(ArrayList<Argument> args) {
-        float max = 0;
+        float min = 0;
         for (Argument arg : args) {
-            if (max < arg.getValue()) {
-                max = arg.getValue();
+            if (min > arg.getValue()) {
+                min = arg.getValue();
             }
         }
-        return max;
+        return min;
     }
-
     @Override
     public float getValue() {
-        return this.processFunction(args);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
