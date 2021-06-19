@@ -10,6 +10,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.InvalidFormulaException;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.ShuntingYard;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.FormulaComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,16 +41,6 @@ public class SpreadsheetImpl implements Spreadsheet {
         return this.cellMap.get(coordinate);
     }
 
-    // TODO This shouldn't probably be here
-    public boolean isCoordinateValid(String coordinate) {
-        // Regex that validates if the coordinate follows the 
-        // pattern [letter(s),number(s)]
-        Pattern pattern = Pattern.compile("^[a-zA-Z]+\\d+$"); // TODO mayusculas y minusculas?
-
-        Matcher matcher = pattern.matcher(coordinate);
-        return matcher.matches();
-    }
-
     public Content processStringToContent(String strContent) throws InvalidFormulaException {
         if (strContent.charAt(0) == '=') {
             String formula = strContent.substring(1);
@@ -58,7 +49,10 @@ public class SpreadsheetImpl implements Spreadsheet {
                 tokenizer.tokenize(formula);
                 List<Token> tokens = tokenizer.getTokens();
                 List<Token> postfix = ShuntingYard.infixToRpn(tokens);
-                return factory.createFormula(postfix);
+                
+                List<FormulaComponent> components = new ArrayList<>();
+                
+                return factory.createFormula(components);
                 
             } catch (Tokenizer.ParserException ex) {
                 throw new InvalidFormulaException(ex.getMessage());
@@ -80,13 +74,8 @@ public class SpreadsheetImpl implements Spreadsheet {
     @Override
     public void setContent(String coordinate, String content) throws MalformedCoordinateException, InvalidFormulaException {
 
-        if (isCoordinateValid(coordinate)) {
-            Content classifiedContent = processStringToContent(content);
-        } else {
-            throw new MalformedCoordinateException("Wrong format for coordinate");
-        }
-
-        Cell cell = new cellMap.put(coordinate,);
+        Content classifiedContent = processStringToContent(content);
+                Cell cell = new cellMap.put(coordinate, classifiedContent);
     }
 
     @Override

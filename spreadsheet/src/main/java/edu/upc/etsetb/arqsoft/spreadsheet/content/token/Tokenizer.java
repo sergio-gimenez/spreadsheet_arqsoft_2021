@@ -9,6 +9,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.content.InvalidFormulaException;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.ShuntingYard;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,47 +123,54 @@ public final class Tokenizer {
         * number, opening round bracket, closing round bracket, colon character,
         * semi-colon character, comma, function name, and range.
          */
-        Tokenizer tokenizer = new Tokenizer();
-        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
-        tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
-        tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
-        tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
-        tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
-        tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
-        tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
-        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.CELL); //cell
-        tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
-        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
-        
-
-        try {
-           tokenizer.tokenize("SUM(1, 2) + A2 * (5 - 2)");
-   //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
-
-            LinkedList<Token> tokens = tokenizer.getTokens();
-
-            ArrayList<Token> postfix = new ArrayList<>();
-            try {
-                postfix = (ArrayList<Token>) ShuntingYard.infixToRpn(tokens);
-            } catch (InvalidFormulaException ex) {
-            }
-
-            String infix = "";
-            String strPostfix = "";
-            for (Token token : postfix) {
-                System.out.println("" + token.type + " " + token.sequence);
-                strPostfix += token.sequence;
-            }
-
-            System.out.println("\nPostfix:\n" + strPostfix);
+//        Tokenizer tokenizer = new Tokenizer();
+//        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
+//        tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
+//        tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
+//        tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
+//        tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
+//        tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
+//        tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
+//        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.CELL); //cell
+//        tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
+//        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
+//        
             
-            
-//            int res = ShuntingYard.evaluatePostfix(strPostfix);
-//            System.out.println("\nEvaluated postfix = " + res);
+        Pattern pattern = Pattern.compile("^([a-zA-Z]+)(\\d+)$"); 
+        Matcher matcher = pattern.matcher("AFD34");
+        if(matcher.matches()){
+                    String a = matcher.group(1);
+        System.out.println(a);
 
-        } catch (ParserException e) {
-            System.out.println(e.getMessage());
         }
+//        try {
+//           tokenizer.tokenize("SUM(1, 2) + A2 * (5 - 2)");
+//   //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
+//
+//            List<Token> tokens = tokenizer.getTokens();
+//
+//            List<Token> postfix = new ArrayList<>();
+//            try {
+//                postfix = ShuntingYard.infixToRpn(tokens);
+//            } catch (InvalidFormulaException ex) {
+//            }
+//
+//            String infix = "";
+//            String strPostfix = "";
+//            for (Token token : postfix) {
+//                System.out.println("" + token.type + " " + token.sequence);
+//                strPostfix += token.sequence;
+//            }
+//
+//            System.out.println("\nPostfix:\n" + strPostfix);
+//            
+//            
+////            int res = ShuntingYard.evaluatePostfix(strPostfix);
+////            System.out.println("\nEvaluated postfix = " + res);
+//
+//        } catch (ParserException e) {
+//            System.out.println(e.getMessage());
+//        }
 
     }
 

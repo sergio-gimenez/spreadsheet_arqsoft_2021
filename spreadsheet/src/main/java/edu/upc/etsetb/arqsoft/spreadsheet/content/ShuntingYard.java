@@ -68,13 +68,9 @@ public class ShuntingYard {
         }
     }
 
-    static boolean hasHigherPrecedence(Token curToken, Token stackToken) throws Exception {
-        throw new Exception("Method not implemented");
-    }
-
     // Method converts given infixto postfix expression
     // to illustrate shunting yard algorithm
-    static List<Token> infixToRpn(List<Token> tokens) throws InvalidFormulaException {
+    public static List<Token> infixToRpn(List<Token> tokens) throws InvalidFormulaException {
 
         // Initalising an empty stack
         Stack<Token> stack = new Stack<>();

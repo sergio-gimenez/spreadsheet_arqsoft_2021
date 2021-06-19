@@ -26,4 +26,4 @@ public class Token {
         return this.type == type;
     }
 
-}
+}   
