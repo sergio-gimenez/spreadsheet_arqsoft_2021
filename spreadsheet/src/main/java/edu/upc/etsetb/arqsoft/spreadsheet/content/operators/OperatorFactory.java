@@ -5,8 +5,6 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.content.operators;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  *
  * @author gerard
@@ -24,7 +22,7 @@ public class OperatorFactory {
                 }
                 return (Operator) operatorClass.getConstructor().newInstance();
             }
-        } catch (OperatorInvalidException | IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+        } catch (Exception e) {
             throw new OperatorInvalidException();
         }
         return null;

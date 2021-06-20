@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenizerGenerator;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Formula;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;

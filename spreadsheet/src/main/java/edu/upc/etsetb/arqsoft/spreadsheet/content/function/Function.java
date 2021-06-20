@@ -8,6 +8,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.content.function;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Operand;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -18,5 +19,18 @@ public abstract class Function implements Operand, Argument {
     public ArrayList<Argument> args;
     
     abstract float processFunction(ArrayList<Argument> args);
+    
+    public static final HashMap<String,Class> functionClassMap = new HashMap<>();
+    static {
+        functionClassMap.put(FunctionEnum.SUM.toString(), SumFunction.class);
+        functionClassMap.put(FunctionEnum.AVG.toString(), AvgFunction.class);
+        functionClassMap.put(FunctionEnum.MAX.toString(), MaxFunction.class);
+        functionClassMap.put(FunctionEnum.MIN.toString(), MinFunction.class);
+    }
+    
+    public static boolean isValidFunction(String s) {
+        s = s.toUpperCase();
+        return functionClassMap.containsKey(s);
+    }
     
 }

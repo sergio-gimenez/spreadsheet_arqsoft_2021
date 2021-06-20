@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.upc.etsetb.arqsoft.spreadsheet.entities;
+package edu.upc.etsetb.arqsoft.spreadsheet.content.token;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenEnum;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
