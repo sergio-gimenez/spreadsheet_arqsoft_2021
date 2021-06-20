@@ -24,34 +24,34 @@ public class FormulaComponentFactory {
 
     public static List<FormulaComponent> generateFormulaComponentList(List<Token> tokens) throws OperatorInvalidException, InvalidFunctionException, InvalidFormulaComponentException {
         List<FormulaComponent> components = new ArrayList<FormulaComponent>(tokens.size());
-        
-            for (Token token : tokens) {
-                final FormulaComponent component;
-                switch (token.type) {
-                    case CELL:
-                        component = new Coordinate(token.sequence);
-                        break;
-                    case NUMBER:
-                        component = new Coordinate(token.sequence);
-                        break;
-                    case RANGE:
-                        component = new Range(token.sequence);
-                        break;
-                    case OPERATOR:
-                        component = OperatorFactory.getInstance(token.sequence);
-                        break;
-                    case FUNCTION:
-                        component = FunctionFactory.getInstance(token.sequence);
-                        break;
-                    case DELIMITER:
-                        component = new Delimiter();
-                        break;
-                    default:
-                        throw new InvalidFormulaComponentException("Invalid Formula Componenet");
-                }
-                components.add(component);
+
+        for (Token token : tokens) {
+            final FormulaComponent component;
+            switch (token.type) {
+                case CELL:
+                    component = new Coordinate(token.sequence);
+                    break;
+                case NUMBER:
+                    component = new Coordinate(token.sequence);
+                    break;
+                case RANGE:
+                    component = new Range(token.sequence);
+                    break;
+                case OPERATOR:
+                    component = OperatorFactory.getInstance(token.sequence);
+                    break;
+                case FUNCTION:
+                    component = FunctionFactory.getInstance(token.sequence);
+                    break;
+                case DELIMITER:
+                    component = new Delimiter();
+                    break;
+                default:
+                    throw new InvalidFormulaComponentException("Token cannot be converted into Formula Componenet");
             }
-            return components;
-        } 
+            components.add(component);
+        }
+        return components;
     }
+
 }
