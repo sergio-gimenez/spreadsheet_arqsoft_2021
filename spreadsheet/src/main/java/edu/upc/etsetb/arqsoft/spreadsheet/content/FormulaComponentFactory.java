@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.content;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.operators.Operator;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenEnum;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Coordinate;
@@ -28,8 +29,9 @@ public class FormulaComponentFactory {
 component = new Coordinate(token.sequence);
                     break;
                 case RANGE:
-                    component = 
+                    component = new Range(token.sequence);
                 case OPERATOR:
+                    component = new Operator();
                 case FUNCTION:
                 case DELIMITER:
                     

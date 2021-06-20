@@ -54,7 +54,7 @@ public class Coordinate implements Argument, Operand {
         return sum;
     }
      
-      private String getColumnFromInt(int value) {      
+      private static String getColumnFromInt(int value) {      
         StringBuffer columnBuffer = new StringBuffer();
         
         int res = value;
