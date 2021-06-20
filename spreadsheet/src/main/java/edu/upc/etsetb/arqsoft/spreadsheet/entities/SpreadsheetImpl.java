@@ -13,12 +13,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.FormulaComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -88,6 +83,11 @@ public class SpreadsheetImpl implements Spreadsheet {
     @Override
     public HashMap<Coordinate, Cell> getCellMap() {
         return cellMap;
+    }
+
+    @Override
+    public void setContent(Coordinate coordinate, String content) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

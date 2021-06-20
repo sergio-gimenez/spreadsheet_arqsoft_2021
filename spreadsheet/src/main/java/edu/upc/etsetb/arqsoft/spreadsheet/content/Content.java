@@ -9,6 +9,16 @@ package edu.upc.etsetb.arqsoft.spreadsheet.content;
  *
  * @author osboxes
  */
-public interface Content {
+public abstract class Content {
+
+    protected String text;
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String s) {
+        this.text = s;
+    }
     
 }

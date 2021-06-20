@@ -9,7 +9,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.content;
  *
  * @author osboxes
  */
-public class Number implements Argument, Operand, Content {
+public class Number extends Content implements Argument, Operand {
 
     private float value; 
     

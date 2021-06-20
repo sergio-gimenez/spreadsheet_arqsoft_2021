@@ -9,7 +9,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.content;
  *
  * @author osboxes
  */
-public class Text implements Content {
+public class Text extends Content {
 
     private String value;
 

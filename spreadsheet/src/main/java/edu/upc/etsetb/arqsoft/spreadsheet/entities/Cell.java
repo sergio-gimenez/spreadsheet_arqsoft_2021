@@ -19,9 +19,8 @@ public class Cell {
         this.content = content;
     }
 
-    public Double getContentAsDouble() {
-        //    return content;
-        throw new Exception("Method not implemented")
+    public Content getContentAsDouble() {
+        return content;
     }
 
     public Content getContentAsString() {

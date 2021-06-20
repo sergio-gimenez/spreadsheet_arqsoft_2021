@@ -5,20 +5,32 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.content;
 
-import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
 import java.util.List;
 
 /**
  *
  * @author osboxes
  */
-public class Formula implements Content{
-        
-    private List <Token> formulaComponentList;
+public class Formula extends Content{
+    
+    private String text;
+    private List <FormulaComponent> formulaComponentList;
+    private Double value;
 
-    public Formula(List<Token> formulaComponentList) {
+    public Formula(String text, List<FormulaComponent> formulaComponentList) {
+        this.text = text;
         this.formulaComponentList = formulaComponentList;
     }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+    
+    
     
     
     
