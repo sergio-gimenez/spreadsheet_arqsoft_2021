@@ -67,19 +67,28 @@ public final class SpreadsheetController {
         }
     }
 
+    
+    
     private Formula processFormula(String strContent) throws ContentException {
          String formula = strContent.substring(1);
             try {
                 tokenizer.tokenize(formula);
                 List<Token> tokens = tokenizer.getTokens();
                 List<Token> postfix = ShuntingYard.infixToRpn(tokens);
-
                 List<FormulaComponent> components = new ArrayList<>();
-
+                //COnseguir lista de formula components
+                //Obtener el valor de la formula
+                //construir la formula con valor, lista y string
                 return factory.createFormula(components);
 
             } catch (Tokenizer.ParserException ex) {
                 throw new ContentException(ex.getMessage());
             }
+    }
+    
+    
+    private void recomputeFormula(Cell cell){
+        //obtener formula
+        // a partir de su lista de componentes
     }
 }
