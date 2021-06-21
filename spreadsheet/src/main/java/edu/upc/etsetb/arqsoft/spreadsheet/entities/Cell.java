@@ -6,6 +6,7 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
 
@@ -24,8 +25,12 @@ public class Cell implements FormulaComponent {
     public Double getContentAsDouble() throws  NoNumberException{
         if (this.content instanceof Number) {
             return Double.parseDouble(this.content.getText());
-        } else {
-            throw new NoNumberException("The content is not a number");
+        }else if( this.content instanceof Formula){
+            Formula formula = (Formula) this.content;
+            return formula.getValue();
+        }
+        else {
+            throw new NoNumberException("The content has not a value");
         }
     }
 

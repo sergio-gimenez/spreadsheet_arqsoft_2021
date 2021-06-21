@@ -86,7 +86,7 @@ public final class SpreadsheetController {
                 tokenizer.tokenize(formula);
                 List<Token> tokens = tokenizer.getTokens();
                 List<Token> postfix = ShuntingYard.infixToRpn(tokens);
-                List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(tokens, this.spreadsheet);
+                List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
                 Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
                 return factory.createFormula(formula, components, formulaResult);
 
