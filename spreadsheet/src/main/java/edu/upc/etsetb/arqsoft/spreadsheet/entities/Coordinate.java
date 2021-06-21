@@ -14,7 +14,7 @@ import java.util.regex.*;
  *
  * @author osboxes
  */
-public class Coordinate implements Argument, Operand {
+public class Coordinate  {
 
     private static final Pattern COORDINATE_PATTERN = Pattern.compile("^([a-zA-Z]+)(\\d+)$");
     private String column;
@@ -106,11 +106,6 @@ public class Coordinate implements Argument, Operand {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public float getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

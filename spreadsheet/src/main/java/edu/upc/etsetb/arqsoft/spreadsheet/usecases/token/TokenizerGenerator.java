@@ -28,7 +28,7 @@ public class TokenizerGenerator {
         tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
         tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
         tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
-        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.CELL); //cell
+        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
         tokenizer.add(",", TokenEnum.COMMA); //Argument separator
         return tokenizer;
     }

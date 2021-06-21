@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class MinFunction extends Function{
 
     @Override
-    float processFunction(ArrayList<Argument> args) {
-        float min = 0;
+    double processFunction(ArrayList<Argument> args) {
+        double min = 0;
         for (Argument arg : args) {
             if (min > arg.getValue()) {
                 min = arg.getValue();
@@ -24,9 +24,5 @@ public class MinFunction extends Function{
         }
         return min;
     }
-    @Override
-    public float getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+     
 }

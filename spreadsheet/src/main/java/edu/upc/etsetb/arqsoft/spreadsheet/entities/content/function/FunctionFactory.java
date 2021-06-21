@@ -5,12 +5,14 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
+
 /**
  *
  * @author gerard
  */
 public class FunctionFactory {
-      public static Function getInstance(String s) throws InvalidFunctionException {
+      public static Function getInstance(String s) throws ContentException {
 
         try {
             if (s != null) {
@@ -18,12 +20,12 @@ public class FunctionFactory {
                 Class functionClass = Function.functionClassMap.get(s);
                 
                 if (functionClass == null) {
-                    throw new InvalidFunctionException();
+                    throw new ContentException();
                 }
                 return (Function) functionClass.getConstructor().newInstance();
             }
         } catch (Exception e) {
-            throw new InvalidFunctionException();
+            throw new ContentException("Function not valid");
         }
         return null;
     }

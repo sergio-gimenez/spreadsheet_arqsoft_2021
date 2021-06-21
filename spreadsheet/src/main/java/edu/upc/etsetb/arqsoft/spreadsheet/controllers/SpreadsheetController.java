@@ -18,6 +18,8 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.Coordinate;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public final class SpreadsheetController {
         return cell.getContentAsString();
     }
 
-    private Content processStringToContent(String strContent) throws ContentException {
+    private Content processStringToContent(String strContent) throws ContentException, BadCoordinateException {
         if (strContent.charAt(0) == '=') {
            return this.processFormula(strContent);
 
@@ -74,15 +76,15 @@ public final class SpreadsheetController {
         }
     }   
     
-    private Formula processFormula(String strContent) throws ContentException {
+    private Formula processFormula(String strContent) throws ContentException, BadCoordinateException {
          String formula = strContent.substring(1);
             try {
                 tokenizer.tokenize(formula);
                 List<Token> tokens = tokenizer.getTokens();
                 List<Token> postfix = ShuntingYard.infixToRpn(tokens);
-                List<FormulaComponent> components = new ArrayList<>();
-                //COnseguir lista de formula components
-                //Obtener el valor de la formula
+                List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(tokens, this.spreadsheet);
+                Double formulaResult = FormulaEvaluator.getResult(components);
+                
                 //construir la formula con valor, lista y string
                 return factory.createFormula(components);
 

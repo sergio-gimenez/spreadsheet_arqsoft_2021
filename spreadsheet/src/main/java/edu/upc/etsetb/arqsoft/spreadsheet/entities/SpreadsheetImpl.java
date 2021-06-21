@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class SpreadsheetImpl implements Spreadsheet {
 
     private HashMap<Coordinate, Cell> cellMap;
+    
     public SpreadsheetImpl() {
         this.cellMap = new HashMap<Coordinate, Cell>();
     }

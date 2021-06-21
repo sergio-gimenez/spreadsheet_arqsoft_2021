@@ -15,17 +15,11 @@ import java.util.ArrayList;
 public class SumFunction extends Function {
 
     @Override
-    float processFunction(ArrayList<Argument> args) {
-        float sum = 0;
+    double processFunction(ArrayList<Argument> args) {
+        double sum = 0;
         for(Argument arg: args){
             sum += arg.getValue();
         }
         return sum;
     }
-
-    @Override
-    public float getValue() {
-        return this.processFunction(args);
-    }
-
 }

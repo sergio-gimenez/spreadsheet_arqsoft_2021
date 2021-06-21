@@ -6,13 +6,14 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
 
 /**
  *
  * @author osboxes
  */
-public class Cell {
+public class Cell implements FormulaComponent {
 
     private Content content;
 
@@ -32,9 +33,8 @@ public class Cell {
         return content.getText();
     }
 
-    public String getFormula() {
-        return null;
-        // TODO
+    public Content getContent() {
+        return this.content;
     }
 
 }

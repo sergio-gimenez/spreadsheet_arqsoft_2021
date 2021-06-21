@@ -83,7 +83,7 @@ public class ShuntingYard {
         for (Token token : tokens) {
 
             // If the scanned Token is an operand, add it to output
-            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.CELL) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
+            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.COORDINATE) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
                 outputList.add(token);
             }
 

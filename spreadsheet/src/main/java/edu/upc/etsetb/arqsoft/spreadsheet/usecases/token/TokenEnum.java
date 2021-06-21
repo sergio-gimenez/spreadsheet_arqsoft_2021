@@ -10,5 +10,5 @@ package edu.upc.etsetb.arqsoft.spreadsheet.usecases.token;
  * @author sergio
  */
 public enum TokenEnum {
-    NUMBER, CELL, RANGE, OPERATOR, LEFT_BRACKET, RIGHT_BRACKET, COMMA, FUNCTION, DELIMITER
+    NUMBER, COORDINATE, RANGE, OPERATOR, LEFT_BRACKET, RIGHT_BRACKET, COMMA, FUNCTION, DELIMITER
 }

@@ -15,15 +15,9 @@ import java.util.ArrayList;
  * @author sergio
  */
 public class AvgFunction extends Function {
-
     @Override
-    public float getValue() {
-        return this.processFunction(args);
-    }
-
-    @Override
-    float processFunction(ArrayList<Argument> args) {
-        float res = 0;
+    double processFunction(ArrayList<Argument> args) {
+        double res = 0;
         for (Argument arg : args) {
             res += arg.getValue();
         }

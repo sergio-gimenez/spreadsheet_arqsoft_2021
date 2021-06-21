@@ -11,14 +11,16 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
  */
 public class Number extends Content implements Argument, Operand {
 
-    private float value; 
+    private Double value; 
     
-    public Number(Float value){
+    public Number(Double value){
         this.value = value;        
-    }
+    }   
 
     @Override
-    public float getValue() {
-        return value;
-    }            
+    public double getValue() {
+       return this.value;
+    }
+
+    
 }

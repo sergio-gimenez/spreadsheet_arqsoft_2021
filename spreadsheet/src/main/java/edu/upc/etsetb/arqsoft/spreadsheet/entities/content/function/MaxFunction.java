@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class MaxFunction extends Function {
 
     @Override
-    float processFunction(ArrayList<Argument> args) {
-        float max = 0;
+    double processFunction(ArrayList<Argument> args) {
+        double max = 0;
         for (Argument arg : args) {
             if (max < arg.getValue()) {
                 max = arg.getValue();
@@ -24,10 +24,4 @@ public class MaxFunction extends Function {
         }
         return max;
     }
-
-    @Override
-    public float getValue() {
-        return this.processFunction(args);
-    }
-
 }

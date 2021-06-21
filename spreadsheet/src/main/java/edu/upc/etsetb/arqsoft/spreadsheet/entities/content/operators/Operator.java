@@ -6,6 +6,9 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content.operators;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
+
 import java.util.HashMap;
 
 /**
@@ -15,7 +18,7 @@ import java.util.HashMap;
 public abstract class Operator implements FormulaComponent {
 
     public static final HashMap<String, OperatorEnum> operatorStringMap = new HashMap<>();
-
+    public abstract Number compute(Operand firstOperand, Operand secondOperand);
     static {
         operatorStringMap.put("+", OperatorEnum.ADD);
         operatorStringMap.put("-", OperatorEnum.SUBSTRACT);
@@ -35,4 +38,5 @@ public abstract class Operator implements FormulaComponent {
     public static boolean isValidOperator(String operator) {
         return operatorStringMap.containsKey(operator);
     }
+    
 }

@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
 import java.util.ArrayList;
@@ -18,7 +19,13 @@ public abstract class Function implements Operand, Argument {
     
     public ArrayList<Argument> args;
     
-    abstract float processFunction(ArrayList<Argument> args);
+    abstract double processFunction(ArrayList<Argument> args);
+    
+    @Override
+    public double getValue() {
+        return this.processFunction(args);
+    }
+
     
     public static final HashMap<String,Class> functionClassMap = new HashMap<>();
     static {

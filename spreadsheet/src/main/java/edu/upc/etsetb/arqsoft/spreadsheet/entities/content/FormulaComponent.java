@@ -10,5 +10,4 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
  * @author osboxes
  */
 public interface FormulaComponent {
-    
 }

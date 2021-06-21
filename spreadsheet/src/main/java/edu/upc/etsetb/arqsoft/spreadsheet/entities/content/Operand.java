@@ -10,5 +10,6 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
  * @author osboxes
  */
 public interface Operand extends FormulaComponent{
+    public double getValue();
     
 }
