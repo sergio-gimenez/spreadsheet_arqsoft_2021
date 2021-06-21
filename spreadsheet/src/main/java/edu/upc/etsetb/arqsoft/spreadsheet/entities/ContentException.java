@@ -9,7 +9,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author gerard
  */
-class ContentException extends Exception {
+public class ContentException extends Exception {
        public ContentException() {
     }
         public ContentException(String msg) {

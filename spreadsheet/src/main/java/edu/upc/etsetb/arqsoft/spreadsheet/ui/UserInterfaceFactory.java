@@ -10,11 +10,11 @@ package edu.upc.etsetb.arqsoft.spreadsheet.ui;
  * @author gerard
  */
 public class UserInterfaceFactory {
-     public static UserInterfaceFactory getInstance(String factoryType) throws NoExistingUIException{
+     public static UserInterfaceFactory getInstance(String factoryType) throws InvalidUIException{
         if(factoryType.equalsIgnoreCase("text")){
             return new TextUIFactory() ;
         }
-        throw new NoExistingUIException("No concrete factory identified for type: " + factoryType) ;
+        throw new InvalidUIException("No concrete factory identified for type: " + factoryType) ;
         
     }
      

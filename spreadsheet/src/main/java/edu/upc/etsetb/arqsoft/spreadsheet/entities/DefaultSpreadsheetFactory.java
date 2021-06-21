@@ -25,7 +25,7 @@ public class DefaultSpreadsheetFactory extends SpreadsheetFactory {
     }
 
     @Override
-    public Number createNumber(Float number) {
+    public Number createNumber(Double number) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

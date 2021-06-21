@@ -16,9 +16,9 @@ public interface Spreadsheet {
     
     public Cell getCell(Coordinate coordinate);
     
-    public void setContent(Coordinate coordinate, String content);
+    public void setContent(Coordinate coordinate, Content content);
     
-    public Content getContent (Cell cell);
+//public Content getContent (Cell cell);
     
     public HashMap<Coordinate, Cell> getCellMap();
     

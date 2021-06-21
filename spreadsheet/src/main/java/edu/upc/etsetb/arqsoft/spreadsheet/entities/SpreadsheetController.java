@@ -5,25 +5,77 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Formula;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.FormulaComponent;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.ShuntingYard;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author gerard
  */
 public final class SpreadsheetController {
-    private Spreadsheet spreadsheet;    
-    
-    public SpreadsheetController(Spreadsheet spreadsheet){
+
+    private Spreadsheet spreadsheet;
+    private SpreadsheetFactory factory;
+    private Tokenizer tokenizer;
+
+    public SpreadsheetController(Spreadsheet spreadsheet, SpreadsheetFactory factory) {
         this.spreadsheet = spreadsheet;
+        this.factory = factory;
+        this.tokenizer = this.factory.getTokenizerInstance();
     }
+
+    public void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException {
+        Coordinate coord = new Coordinate(cellCoord);
+        Content classifiedContent = processStringToContent(content);
+        this.spreadsheet.setContent(coord, classifiedContent);
+
+    }
+
+    public double getCellContentAsDouble(String coord) throws BadCoordinateException, NoNumberException {
+
+        throw new NoNumberException("Method not implemented");
+    }
+
     
-    public void setCellContent(String cellCoord, String content)  throws ContentException, BadCoordinateException{}
-    ;
-    public double getCellContentAsDouble(String coord) throws BadCoordinateException, NoNumberException{
-    
-      throw new NoNumberException("Method not implemented");
-    };
-    
-    public String getCellContentAsString(String cooord) throws BadCoordinateException{
-         throw new BadCoordinateException("Method not implemented");
+    public String getCellContentAsString(String cooord) throws BadCoordinateException {
+        throw new BadCoordinateException("Method not implemented");
+    }
+
+    private Content processStringToContent(String strContent) throws ContentException {
+        if (strContent.charAt(0) == '=') {
+           return this.processFormula(strContent);
+
+        } else {
+
+            try {
+                Double number = Double.parseDouble(strContent);
+                return factory.createNumber(number);
+
+            } catch (NumberFormatException ex) {
+                return factory.createText(strContent);
+            }
+        }
+    }
+
+    private Formula processFormula(String strContent) throws ContentException {
+         String formula = strContent.substring(1);
+            try {
+                tokenizer.tokenize(formula);
+                List<Token> tokens = tokenizer.getTokens();
+                List<Token> postfix = ShuntingYard.infixToRpn(tokens);
+
+                List<FormulaComponent> components = new ArrayList<>();
+
+                return factory.createFormula(components);
+
+            } catch (Tokenizer.ParserException ex) {
+                throw new ContentException(ex.getMessage());
+            }
     }
 }

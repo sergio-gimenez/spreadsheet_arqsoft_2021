@@ -27,7 +27,7 @@ public abstract class SpreadsheetFactory {
         }
     }
 
-    public abstract Number createNumber(Float number);
+    public abstract Number createNumber(Double number);
 
     public abstract Text createText(String content);
     

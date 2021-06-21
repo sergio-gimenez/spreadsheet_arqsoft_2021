@@ -9,13 +9,13 @@ package edu.upc.etsetb.arqsoft.spreadsheet.ui;
  *
  * @author gerard
  */
-public class NoExistingUIException extends Exception {
+public class InvalidUIException extends Exception {
     
-    public NoExistingUIException() {
+    public InvalidUIException() {
 
     }
 
-    public NoExistingUIException(String msg) {
+    public InvalidUIException(String msg) {
         super(msg);
     }
 

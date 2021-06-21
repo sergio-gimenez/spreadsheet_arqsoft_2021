@@ -13,6 +13,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.content;
 // Importing stack class for stacks DS
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenEnum;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import java.util.Stack;
 // Importing specific character class as
 // dealing with only operators and operands
@@ -70,7 +71,7 @@ public class ShuntingYard {
 
     // Method converts given infixto postfix expression
     // to illustrate shunting yard algorithm
-    public static List<Token> infixToRpn(List<Token> tokens) throws InvalidFormulaException {
+    public static List<Token> infixToRpn(List<Token> tokens) throws ContentException {
 
         // Initalising an empty stack
         Stack<Token> stack = new Stack<>();
@@ -95,7 +96,7 @@ public class ShuntingYard {
 
             if (isFunctionOpen) {
                 if (bracketLeftCount == 0 && !token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                    throw new InvalidFormulaException("Left bracket is missing in function");
+                    throw new ContentException("Left bracket is missing in function");
                 } else {
                     if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
                         bracketLeftCount += 1;
@@ -130,7 +131,7 @@ public class ShuntingYard {
                         outputList.add(stack.pop());
                     }
                     if (!stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                        throw new InvalidFormulaException("Bracket mismatch in formula");
+                        throw new ContentException("Bracket mismatch in formula");
                     }
                     stack.pop();
                     if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
@@ -144,7 +145,7 @@ public class ShuntingYard {
         // the stack and append them to output
         while (!stack.isEmpty()) {
             if (stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                throw new InvalidFormulaException("Bracket mismatch in formula");
+                throw new ContentException("Bracket mismatch in formula");
             }
             outputList.add(stack.pop());
         }

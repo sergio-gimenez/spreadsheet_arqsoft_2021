@@ -30,10 +30,10 @@ public class Coordinate implements Argument, Operand {
         this.row = row;
     }
 
-    public Coordinate(String coordinate) {
+    public Coordinate(String coordinate) throws BadCoordinateException {
         Matcher m = getMatcher(coordinate);
         if (!m.matches()) {
-            throw new IllegalArgumentException("Non valid coordinate");
+            throw new BadCoordinateException("Non valid coordinate");
         }
 
         this.column = m.group(1);
