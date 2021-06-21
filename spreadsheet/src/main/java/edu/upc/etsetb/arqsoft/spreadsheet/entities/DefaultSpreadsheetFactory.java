@@ -26,17 +26,16 @@ public class DefaultSpreadsheetFactory extends SpreadsheetFactory {
 
     @Override
     public Number createNumber(Double number) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return new Number(number); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Text createText(String content) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        return new Text(content);}
 
     @Override
-    public Formula createFormula(List<FormulaComponent> components) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Formula createFormula(String text, List<FormulaComponent> components, Double value) {
+        return new Formula(text,components, value);
     }
 
 }

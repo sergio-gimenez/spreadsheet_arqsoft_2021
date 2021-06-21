@@ -6,7 +6,7 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class MaxFunction extends Function {
 
     @Override
-    double processFunction(ArrayList<Argument> args) {
+    double processFunction(List<Argument> args) {
         double max = 0;
         for (Argument arg : args) {
             if (max < arg.getValue()) {

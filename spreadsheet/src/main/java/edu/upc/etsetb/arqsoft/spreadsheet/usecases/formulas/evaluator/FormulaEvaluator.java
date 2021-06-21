@@ -9,6 +9,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.Cell;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Coordinate;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Delimiter;
@@ -17,6 +18,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function.Function;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.operators.Operator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -25,8 +27,6 @@ import java.util.Stack;
  * @author gerard
  */
 public class FormulaEvaluator {
-    
-    
 
     public static Double getResult(List<FormulaComponent> components, Spreadsheet spreadsheet) throws ContentException {
         Double value = 0.0;
@@ -46,29 +46,44 @@ public class FormulaEvaluator {
                     } else if (content instanceof Formula) {
                         //TODO: QUIZAS CONTENT TIENE UN ERROR
                         Formula formula = (Formula) content;
-                        Number number = new Number( formula.getValue());
+                        Number number = new Number(formula.getValue());
                         stack.push(number);
-                    } else{
+                    } else {
                         throw new ContentException("Formula evaluator has found an invalid component");
                     }
-                }else{
+                } else {
                     stack.push(null);
                 }
-            } else if( component instanceof Operator){
+            } else if (component instanceof Operator) {
                 Operator operator = (Operator) component;
-                if(stack.peek() instanceof Operand && stack.get(stack.size()-2) instanceof Operand){
+                if (stack.peek() instanceof Operand && stack.get(stack.size() - 2) instanceof Operand) {
                     secondOperand = (Operand) stack.pop();
-                    firstOperand  = (Operand) stack.pop();
-                    
+                    firstOperand = (Operand) stack.pop();
+
                     stack.push(operator.compute(firstOperand, secondOperand));
                 }
-            } else if( component instanceof Function){
+            } else if (component instanceof Function) {
                 Function function = (Function) component;
+                List<Argument> args = new ArrayList<>();
+                while (!stack.isEmpty() && !(stack.peek() instanceof Delimiter)) {
+                    args.add((Argument) stack.pop());
+                }
+                if (stack.isEmpty() || !(stack.pop() instanceof Delimiter)) {
+                    throw new ContentException("Delimiter not found");
+                }
+                stack.push(function.compute(args));
+            } else {
+                throw new ContentException("Component not evaluable");
 
             }
         }
 
-        return value;
+        if (stack.size() != 1 || !(stack.peek() instanceof Operand)) {
+            throw new ContentException("Invalid stack for evaluate");
+        }
+
+        Operand operand = (Operand) stack.pop();
+        return operand.getValue();
 
     }
 }

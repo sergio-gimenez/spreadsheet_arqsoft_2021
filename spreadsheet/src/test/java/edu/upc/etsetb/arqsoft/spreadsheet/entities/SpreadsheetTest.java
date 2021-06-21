@@ -47,7 +47,9 @@ public class SpreadsheetTest {
         // AND CO-ORDINATES THE COMPUTATION OF THEIR VALUES.
         // BASICALLY: this.instance has to be an instance of SpreadsheetController and everything must be ready 
         // for editing cells in the spreadsheet
-
+        Spreadsheet spreadsheet = new SpreadsheetImpl();
+        SpreadsheetFactory factory = new DefaultSpreadsheetFactory();
+        this.instance = new SpreadsheetController(spreadsheet, factory);
 
         //IMPORTANT: KEEP THE SENTENCES BELOW.
         instance.editSpreadsheet("A1", "1");

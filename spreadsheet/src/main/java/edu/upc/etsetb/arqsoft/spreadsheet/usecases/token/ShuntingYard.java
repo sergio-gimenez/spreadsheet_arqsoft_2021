@@ -1,4 +1,4 @@
-package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
+package edu.upc.etsetb.arqsoft.spreadsheet.usecases.token;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -77,67 +77,59 @@ public class ShuntingYard {
         Stack<Token> stack = new Stack<>();
         ArrayList<Token> outputList = new ArrayList<>();
         boolean isFunctionOpen = false;
-        int bracketLeftCount = 0;
-        int bracketRightCount = 0;
+        int bracketCount = 0;
 
         for (Token token : tokens) {
-
+            if (bracketCount == 0 && !stack.isEmpty() && stack.peek().isOfType(TokenEnum.FUNCTION) && !token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                throw new ContentException("Left bracket is missing in function");
+            } else {
+                if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                    bracketCount++;
+                } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
+                    bracketCount--;
+                }
+//                if (bracketCount == 0) {
+//                    Token delimiter = new Token(TokenEnum.DELIMITER, ";");
+//                    outputList.add(delimiter);
+//                    isFunctionOpen = false;
+//                }
+            }
             // If the scanned Token is an operand, add it to output
             if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.COORDINATE) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
                 outputList.add(token);
-            }
+            } else if (token.isOfType(TokenEnum.FUNCTION)) {
+                stack.push(token);
+                Token delimiter = new Token(TokenEnum.DELIMITER, ";");
+                outputList.add(delimiter);
+//                outputList.add(token);
+//                isFunctionOpen = true;
+//                continue;
+            } //            if (isFunctionOpen) {
+            //            } else {
+            else if (token.isOfType(TokenEnum.OPERATOR)) {
 
-            if (token.isOfType(TokenEnum.FUNCTION)) {
-//                stack.push(token);
-                outputList.add(token);
-                isFunctionOpen = true;
-                continue;
-            }
+                while (!stack.isEmpty()
+                        && stack.peek().isOfType(TokenEnum.OPERATOR)
+                        && (getPrecedence(token.sequence.charAt(0))
+                        <= getPrecedence(stack.peek().sequence.charAt(0)))) {
 
-            if (isFunctionOpen) {
-                if (bracketLeftCount == 0 && !token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                    throw new ContentException("Left bracket is missing in function");
-                } else {
-                    if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                        bracketLeftCount += 1;
-                    } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
-                        bracketLeftCount -= 1;
-                    }
-                    if (bracketLeftCount == 0) {
-                        Token delimiter = new Token(TokenEnum.DELIMITER, ";");
-                        outputList.add(delimiter);
-                        isFunctionOpen = false;
-                    }
+                    outputList.add(stack.pop());
                 }
-            } else {
-                if (token.isOfType(TokenEnum.OPERATOR)) {
-
-                    while (!stack.isEmpty()
-                            && stack.peek().isOfType(TokenEnum.OPERATOR)
-                            && (getPrecedence(token.sequence.charAt(0))
-                            <= getPrecedence(stack.peek().sequence.charAt(0)))) {
-
-                        outputList.add(stack.pop());
-                    }
-                    stack.push(token);
+                stack.push(token);
+            } else if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
+                stack.push(token);
+            } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
+                while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                    outputList.add(stack.pop());
                 }
-
-                if (token.isOfType(TokenEnum.LEFT_BRACKET)) {
-                    stack.push(token);
+                if (!stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
+                    throw new ContentException("Bracket mismatch in formula");
                 }
-
-                if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
-                    while (!stack.isEmpty() && !stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                        outputList.add(stack.pop());
-                    }
-                    if (!stack.peek().isOfType(TokenEnum.LEFT_BRACKET)) {
-                        throw new ContentException("Bracket mismatch in formula");
-                    }
-                    stack.pop();
-                    if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
-                        outputList.add(stack.pop());
-                    }
+                stack.pop();
+                if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
+                    outputList.add(stack.pop());
                 }
+//                }
             }
         }
 

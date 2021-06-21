@@ -6,7 +6,6 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.usecases.token;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
-import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.ShuntingYard;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

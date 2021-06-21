@@ -8,7 +8,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.controllers;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
-import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.ShuntingYard;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.ShuntingYard;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.Token;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.Tokenizer;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
@@ -37,6 +37,10 @@ public final class SpreadsheetController {
         this.spreadsheet = spreadsheet;
         this.factory = factory;
         this.tokenizer = this.factory.getTokenizerInstance();
+    }
+    
+    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException{
+        this.setCellContent(cellCoord, content);
     }
 
     public void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException {
@@ -83,10 +87,8 @@ public final class SpreadsheetController {
                 List<Token> tokens = tokenizer.getTokens();
                 List<Token> postfix = ShuntingYard.infixToRpn(tokens);
                 List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(tokens, this.spreadsheet);
-                Double formulaResult = FormulaEvaluator.getResult(components);
-                
-                //construir la formula con valor, lista y string
-                return factory.createFormula(components);
+                Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
+                return factory.createFormula(formula, components, formulaResult);
 
             } catch (Tokenizer.ParserException ex) {
                 throw new ContentException(ex.getMessage());

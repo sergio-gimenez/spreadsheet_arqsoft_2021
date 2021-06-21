@@ -15,6 +15,7 @@ public class Number extends Content implements Argument, Operand {
     
     public Number(Double value){
         this.value = value;        
+        this.text = String.valueOf(value);
     }   
 
     @Override

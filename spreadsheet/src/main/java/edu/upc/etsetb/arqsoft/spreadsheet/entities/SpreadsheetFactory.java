@@ -31,7 +31,7 @@ public abstract class SpreadsheetFactory {
 
     public abstract Text createText(String content);
     
-    public abstract Formula createFormula(List<FormulaComponent> components);      
+    public abstract Formula createFormula(String text, List<FormulaComponent> components, Double value);      
     
     public abstract Tokenizer getTokenizerInstance();
 

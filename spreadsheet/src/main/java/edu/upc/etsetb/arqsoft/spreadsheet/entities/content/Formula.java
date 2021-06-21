@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class Formula extends Content{
     
-    private String text;
     private List <FormulaComponent> formulaComponentList;
     private Double value;
 
-    public Formula(String text, List<FormulaComponent> formulaComponentList) {
+    public Formula(String text, List<FormulaComponent> formulaComponentList, Double value) {
         this.text = text;
         this.formulaComponentList = formulaComponentList;
+        this.value = value;
     }
 
     public Double getValue() {

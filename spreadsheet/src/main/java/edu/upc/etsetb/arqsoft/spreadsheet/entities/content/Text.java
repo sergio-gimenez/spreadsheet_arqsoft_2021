@@ -11,9 +11,8 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
  */
 public class Text extends Content {
 
-    private String value;
 
     public Text(String value) {
-        this.value = value;
+        this.text = value;
     }
 }

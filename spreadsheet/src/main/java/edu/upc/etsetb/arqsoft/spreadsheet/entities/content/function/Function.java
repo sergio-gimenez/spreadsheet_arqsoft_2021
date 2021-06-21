@@ -10,6 +10,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -17,10 +18,13 @@ import java.util.HashMap;
  */
 public abstract class Function implements Operand, Argument {
     
-    public ArrayList<Argument> args;
+    public List<Argument> args;
     
-    abstract double processFunction(ArrayList<Argument> args);
-    
+    abstract double processFunction(List<Argument> args);
+    public Number compute(List<Argument> args){
+        Double value = this.processFunction(args);
+        return new Number(value);
+    }
     @Override
     public double getValue() {
         return this.processFunction(args);
