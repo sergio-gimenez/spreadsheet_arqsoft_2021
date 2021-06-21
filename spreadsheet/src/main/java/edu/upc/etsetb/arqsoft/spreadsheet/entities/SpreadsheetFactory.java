@@ -7,7 +7,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Formula;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Token;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.FormulaComponent;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Text;
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Number;
 import java.util.List;
@@ -31,7 +31,7 @@ public abstract class SpreadsheetFactory {
 
     public abstract Text createText(String content);
     
-    public abstract Formula createFormula(List<Token> tokens);      
+    public abstract Formula createFormula(List<FormulaComponent> components);      
     
     public abstract Tokenizer getTokenizerInstance();
 

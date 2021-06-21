@@ -18,6 +18,5 @@ public class UserInterfaceFactory {
         
     }
      
-     public abstract Client createUIClient();
-    public abstract UISpreadsheet createUISpreadsheet();
+//    public abstract UISpreadsheet createUISpreadsheet();
 }

@@ -63,14 +63,12 @@ public class SpreadsheetImpl implements Spreadsheet {
                 return factory.createText(strContent);
             }
         }
-        return null;
     }
 
-    @Override
     public void setContent(String coordinate, String content) throws MalformedCoordinateException, InvalidFormulaException {
 
         Content classifiedContent = processStringToContent(content);
-                Cell cell = new cellMap.put(coordinate, classifiedContent);
+          //  Cell cell = new cellMap.put(coordinate, classifiedContent);
     }
 
     @Override
