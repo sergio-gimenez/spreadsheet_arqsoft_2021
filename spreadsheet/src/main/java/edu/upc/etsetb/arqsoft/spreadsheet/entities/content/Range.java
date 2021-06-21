@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Coordinate;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class Range implements Argument {
     private Set<Coordinate> range = new HashSet<Coordinate>();
     private static final Pattern RANGE_PATTERN = Pattern.compile("[a-zA-Z]+\\\\d+:[a-zA-Z]+\\\\d+");
 
-    public Range(String range) {
+    public Range(String range) throws BadCoordinateException {
         Matcher m = getMatcher(range);
         if (!m.matches()) {
             throw new IllegalArgumentException("Invalid range argument");

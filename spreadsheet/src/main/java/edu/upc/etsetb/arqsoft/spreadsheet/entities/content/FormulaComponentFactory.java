@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities.content;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function.FunctionFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.function.InvalidFunctionException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.operators.Operator;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class FormulaComponentFactory {
 
-    public static List<FormulaComponent> generateFormulaComponentList(List<Token> tokens) throws OperatorInvalidException, InvalidFunctionException, InvalidFormulaComponentException {
+    public static List<FormulaComponent> generateFormulaComponentList(List<Token> tokens) throws OperatorInvalidException, InvalidFunctionException, InvalidFormulaComponentException, BadCoordinateException {
         List<FormulaComponent> components = new ArrayList<FormulaComponent>(tokens.size());
 
         for (Token token : tokens) {
