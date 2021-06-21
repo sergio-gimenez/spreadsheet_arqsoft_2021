@@ -6,6 +6,7 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.content.Content;
+import edu.upc.etsetb.arqsoft.spreadsheet.content.Number;
 
 /**
  *
@@ -19,12 +20,16 @@ public class Cell {
         this.content = content;
     }
 
-    public Content getContentAsDouble() {
-        return content;
+    public Double getContentAsDouble() throws  NoNumberException{
+        if (this.content instanceof Number) {
+            return Double.parseDouble(this.content.getText());
+        } else {
+            throw new NoNumberException("The content is not a number");
+        }
     }
 
-    public Content getContentAsString() {
-        return content;
+    public String getContentAsString() {
+        return content.getText();
     }
 
     public String getFormula() {

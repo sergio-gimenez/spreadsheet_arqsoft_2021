@@ -9,7 +9,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  *
  * @author gerard
  */
-class NoNumberException extends Exception {
+public class NoNumberException extends Exception {
        public NoNumberException() {
     }
         public NoNumberException(String msg) {

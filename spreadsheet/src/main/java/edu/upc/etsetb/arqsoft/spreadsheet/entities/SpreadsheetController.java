@@ -38,13 +38,17 @@ public final class SpreadsheetController {
     }
 
     public double getCellContentAsDouble(String coord) throws BadCoordinateException, NoNumberException {
-
-        throw new NoNumberException("Method not implemented");
+        Coordinate selectedCoord =  new Coordinate(coord);
+        Cell cell = this.spreadsheet.getCell(selectedCoord);
+                   
+        return cell.getContentAsDouble();
     }
 
     
-    public String getCellContentAsString(String cooord) throws BadCoordinateException {
-        throw new BadCoordinateException("Method not implemented");
+    public String getCellContentAsString(String coord) throws BadCoordinateException {
+        Coordinate selectedCoord =  new Coordinate(coord);
+        Cell cell = this.spreadsheet.getCell(selectedCoord);
+        return cell.getContentAsString();
     }
 
     private Content processStringToContent(String strContent) throws ContentException {
