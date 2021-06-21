@@ -5,8 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
-import edu.upc.etsetb.arqsoft.spreadsheet.content.Argument;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.Operand;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
 import java.util.Objects;
 import java.util.regex.*;
 

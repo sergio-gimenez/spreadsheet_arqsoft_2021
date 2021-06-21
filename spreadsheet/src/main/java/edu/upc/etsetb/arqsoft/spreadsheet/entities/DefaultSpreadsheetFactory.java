@@ -5,12 +5,12 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
-import edu.upc.etsetb.arqsoft.spreadsheet.content.token.TokenizerGenerator;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.token.Tokenizer;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.Formula;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.FormulaComponent;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.Number;
-import edu.upc.etsetb.arqsoft.spreadsheet.content.Text;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.TokenizerGenerator;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.Tokenizer;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Text;
 import java.util.List;
 
 /**

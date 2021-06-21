@@ -20,7 +20,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
 
 // KEEP THESE IMPORTS (for JUnit 4.12)
-import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetController;
+import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
