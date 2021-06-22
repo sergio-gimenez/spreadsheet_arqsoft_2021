@@ -76,7 +76,6 @@ public class ShuntingYard {
         // Initalising an empty stack
         Stack<Token> stack = new Stack<>();
         ArrayList<Token> outputList = new ArrayList<>();
-        boolean isFunctionOpen = false;
         int bracketCount = 0;
 
         for (Token token : tokens) {
@@ -88,25 +87,14 @@ public class ShuntingYard {
                 } else if (token.isOfType(TokenEnum.RIGHT_BRACKET)) {
                     bracketCount--;
                 }
-//                if (bracketCount == 0) {
-//                    Token delimiter = new Token(TokenEnum.DELIMITER, ";");
-//                    outputList.add(delimiter);
-//                    isFunctionOpen = false;
-//                }
             }
-            // If the scanned Token is an operand, add it to output
             if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.COORDINATE) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
                 outputList.add(token);
             } else if (token.isOfType(TokenEnum.FUNCTION)) {
                 stack.push(token);
                 Token delimiter = new Token(TokenEnum.DELIMITER, ";");
                 outputList.add(delimiter);
-//                outputList.add(token);
-//                isFunctionOpen = true;
-//                continue;
-            } //            if (isFunctionOpen) {
-            //            } else {
-            else if (token.isOfType(TokenEnum.OPERATOR)) {
+            } else if (token.isOfType(TokenEnum.OPERATOR)) {
 
                 while (!stack.isEmpty()
                         && stack.peek().isOfType(TokenEnum.OPERATOR)
@@ -126,10 +114,9 @@ public class ShuntingYard {
                     throw new ContentException("Bracket mismatch in formula");
                 }
                 stack.pop();
-                if (stack.peek().isOfType(TokenEnum.FUNCTION)) {
+                if (!stack.isEmpty() && stack.peek().isOfType(TokenEnum.FUNCTION)) {
                     outputList.add(stack.pop());
                 }
-//                }
             }
         }
 
