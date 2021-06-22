@@ -17,8 +17,9 @@ import java.util.HashMap;
  */
 public abstract class Operator implements FormulaComponent {
 
-    public static final HashMap<String, OperatorEnum> operatorStringMap = new HashMap<>();
     public abstract Number compute(Operand firstOperand, Operand secondOperand);
+
+    public static final HashMap<String, OperatorEnum> operatorStringMap = new HashMap<>();
     static {
         operatorStringMap.put("+", OperatorEnum.ADD);
         operatorStringMap.put("-", OperatorEnum.SUBSTRACT);

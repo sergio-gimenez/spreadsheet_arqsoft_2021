@@ -21,4 +21,6 @@ public abstract class Content {
         this.text = s;
     }
     
+    public abstract Double getValueAsDouble();
+    
 }

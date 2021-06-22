@@ -9,12 +9,13 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Number;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
 
 /**
  *
  * @author osboxes
  */
-public class Cell implements FormulaComponent {
+public class Cell implements FormulaComponent, Operand {
 
     private Content content;
 
@@ -22,24 +23,15 @@ public class Cell implements FormulaComponent {
         this.content = content;
     }
 
-    public Double getContentAsDouble() throws  NoNumberException{
-        if (this.content instanceof Number) {
-            return Double.parseDouble(this.content.getText());
-        }else if( this.content instanceof Formula){
-            Formula formula = (Formula) this.content;
-            return formula.getValue();
-        }
-        else {
-            throw new NoNumberException("The content has not a value");
-        }
-    }
-
-    public String getContentAsString() {
-        return content.getText();
-    }
-
-    public Content getContent() {
+      public Content getContent() {
         return this.content;
     }
+
+    @Override
+    public double getValue() {
+        return this.getContent().getValueAsDouble();
+    }
+
+
 
 }

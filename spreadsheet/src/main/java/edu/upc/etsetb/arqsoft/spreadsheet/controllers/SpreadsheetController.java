@@ -20,7 +20,6 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,8 +37,8 @@ public final class SpreadsheetController {
         this.factory = factory;
         this.tokenizer = this.factory.getTokenizerInstance();
     }
-    
-    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException{
+
+    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException {
         this.setCellContent(cellCoord, content);
     }
 
@@ -51,22 +50,21 @@ public final class SpreadsheetController {
     }
 
     public double getCellContentAsDouble(String coord) throws BadCoordinateException, NoNumberException {
-        Coordinate selectedCoord =  new Coordinate(coord);
+        Coordinate selectedCoord = new Coordinate(coord);
         Cell cell = this.spreadsheet.getCell(selectedCoord);
-                   
-        return cell.getContentAsDouble();
+
+        return cell.getContent().getValueAsDouble();
     }
 
-    
     public String getCellContentAsString(String coord) throws BadCoordinateException {
-        Coordinate selectedCoord =  new Coordinate(coord);
+        Coordinate selectedCoord = new Coordinate(coord);
         Cell cell = this.spreadsheet.getCell(selectedCoord);
-        return cell.getContentAsString();
+        return cell.getContent().getText();
     }
 
     private Content processStringToContent(String strContent) throws ContentException, BadCoordinateException {
         if (strContent.charAt(0) == '=') {
-           return this.processFormula(strContent);
+            return this.processFormula(strContent);
 
         } else {
 
@@ -78,25 +76,24 @@ public final class SpreadsheetController {
                 return factory.createText(strContent);
             }
         }
-    }   
-    
-    private Formula processFormula(String strContent) throws ContentException, BadCoordinateException {
-         String formula = strContent.substring(1);
-            try {
-                tokenizer.tokenize(formula);
-                List<Token> tokens = tokenizer.getTokens();
-                List<Token> postfix = ShuntingYard.infixToRpn(tokens);
-                List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
-                Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
-                return factory.createFormula(formula, components, formulaResult);
-
-            } catch (Tokenizer.ParserException ex) {
-                throw new ContentException(ex.getMessage());
-            }
     }
-    
-    
-    private void recomputeFormula(Cell cell){
+
+    private Formula processFormula(String strContent) throws ContentException, BadCoordinateException {
+        String formula = strContent.substring(1);
+        try {
+            tokenizer.tokenize(formula);
+            List<Token> tokens = tokenizer.getTokens();
+            List<Token> postfix = ShuntingYard.infixToRpn(tokens);
+            List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
+            Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
+            return factory.createFormula(formula, components, formulaResult);
+
+        } catch (Tokenizer.ParserException | NoNumberException ex) {
+            throw new ContentException(ex.getMessage());
+        }
+    }
+
+    private void recomputeFormula(Cell cell) {
         //obtener formula
         // a partir de su lista de componentes
     }

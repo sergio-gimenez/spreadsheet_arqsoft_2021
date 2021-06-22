@@ -22,12 +22,13 @@ public class Formula extends Content{
         this.value = value;
     }
 
-    public Double getValue() {
-        return value;
-    }
-
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    @Override
+    public Double getValueAsDouble() {
+        return value;
     }
     
     

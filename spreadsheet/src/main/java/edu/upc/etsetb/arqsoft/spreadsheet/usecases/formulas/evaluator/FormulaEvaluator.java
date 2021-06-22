@@ -8,6 +8,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Cell;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Coordinate;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
@@ -28,7 +29,7 @@ import java.util.Stack;
  */
 public class FormulaEvaluator {
 
-    public static Double getResult(List<FormulaComponent> components, Spreadsheet spreadsheet) throws ContentException {
+    public static Double getResult(List<FormulaComponent> components, Spreadsheet spreadsheet) throws ContentException, NoNumberException {
         Double value = 0.0;
         Stack<FormulaComponent> stack = new Stack<>();
         Operand firstOperand = null;
@@ -46,7 +47,7 @@ public class FormulaEvaluator {
                     } else if (content instanceof Formula) {
                         //TODO: QUIZAS CONTENT TIENE UN ERROR
                         Formula formula = (Formula) content;
-                        Number number = new Number(formula.getValue());
+                        Number number = new Number(formula.getValueAsDouble());
                         stack.push(number);
                     } else {
                         throw new ContentException("Formula evaluator has found an invalid component");

@@ -15,4 +15,11 @@ public class Text extends Content {
     public Text(String value) {
         this.text = value;
     }
+
+    @Override
+    public Double getValueAsDouble() {
+        throw new UnsupportedOperationException("Text cannot provide a Double."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

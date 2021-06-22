@@ -23,5 +23,10 @@ public class Number extends Content implements Argument, Operand {
        return this.value;
     }
 
+    @Override
+    public Double getValueAsDouble() {
+       return this.value;
+    }
+
     
 }
