@@ -92,7 +92,7 @@ public final class SpreadsheetController {
             List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
             Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
             Formula formula =  factory.createFormula(formulaText, components, formulaResult);
-            this.checkCircularity(coord, formula);
+            this.checkCircularDependencies(coord, formula);
             return formula;
 
         } catch (Tokenizer.ParserException | NoNumberException ex) {
@@ -124,14 +124,14 @@ public final class SpreadsheetController {
 //            }
 //        }
 //    }
-    private void checkCircularity(Coordinate coord, Formula formula) throws ContentException {
-        Set<Coordinate> dps = getFullDependenciesOfFormula(formula);
-        if (dps.contains(coord)) {
+    private void checkCircularDependencies(Coordinate coord, Formula formula) throws ContentException {
+        Set<Coordinate> dependencies = getRecurrentDependenciesOfFormula(formula);
+        if (dependencies.contains(coord)) {
             throw new ContentException("Content has circular dependencies");
         }
     }
 
-    private Set<Coordinate> getFullDependenciesOfFormula(Formula formula) {
+    private Set<Coordinate> getRecurrentDependenciesOfFormula(Formula formula) {
         Set<Coordinate> dps = new HashSet();
         Set<Coordinate> directDps = getDependenciesOfFormula(formula);
         dps.addAll(directDps);
@@ -139,7 +139,7 @@ public final class SpreadsheetController {
         for (Coordinate i : directDps) {
             Content cp = this.spreadsheet.getCell(i).getContent();
             if (cp instanceof Formula) {
-                dps.addAll(getFullDependenciesOfFormula((Formula) cp));
+                dps.addAll(getRecurrentDependenciesOfFormula((Formula) cp));
             }
         }
         return dps;
