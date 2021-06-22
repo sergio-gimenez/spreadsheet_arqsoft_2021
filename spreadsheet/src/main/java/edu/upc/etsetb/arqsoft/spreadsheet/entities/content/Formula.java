@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author osboxes
  */
-public class Formula extends Content{
-    
-    private List <FormulaComponent> formulaComponentList;
+public class Formula extends Content {
+
+    private List<FormulaComponent> formulaComponentList;
     private Double value;
 
     public Formula(String text, List<FormulaComponent> formulaComponentList, Double value) {
@@ -30,12 +30,9 @@ public class Formula extends Content{
     public Double getValueAsDouble() {
         return value;
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public List<FormulaComponent> getFormulaComponents() {
+        return this.formulaComponentList;
+    }
+
 }

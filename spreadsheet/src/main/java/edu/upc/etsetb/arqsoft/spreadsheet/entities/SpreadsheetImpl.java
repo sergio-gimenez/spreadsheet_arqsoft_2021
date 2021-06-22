@@ -32,7 +32,7 @@ public class SpreadsheetImpl implements Spreadsheet {
 
     @Override
     public void setContent(Coordinate coordinate, Content content) {
-        Cell cell = new Cell(content);
+        Cell cell = new Cell(coordinate, content);
         this.cellMap.put(coordinate, cell);
     }
 
