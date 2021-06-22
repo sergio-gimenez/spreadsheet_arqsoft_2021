@@ -132,31 +132,31 @@ public final class SpreadsheetController {
     }
 
     private Set<Coordinate> getRecurrentDependenciesOfFormula(Formula formula) {
-        Set<Coordinate> dps = new HashSet();
-        Set<Coordinate> directDps = getDependenciesOfFormula(formula);
-        dps.addAll(directDps);
+        Set<Coordinate> dependencies = new HashSet();
+        Set<Coordinate> directDependencies = getDependenciesOfFormula(formula);
+        dependencies.addAll(directDependencies);
 
-        for (Coordinate i : directDps) {
-            Content cp = this.spreadsheet.getCell(i).getContent();
-            if (cp instanceof Formula) {
-                dps.addAll(getRecurrentDependenciesOfFormula((Formula) cp));
+        for (Coordinate coord : directDependencies) {
+            Content component = this.spreadsheet.getCell(coord).getContent();
+            if (component instanceof Formula) {
+                dependencies.addAll(getRecurrentDependenciesOfFormula((Formula) component));
             }
         }
-        return dps;
+        return dependencies;
     }
 
     private Set<Coordinate> getDependenciesOfFormula(Formula formula) {
-        Set<Coordinate> dps = new HashSet<>();
+        Set<Coordinate> dependencies = new HashSet<>();
         for (FormulaComponent component : formula.getFormulaComponents()) {
             if (component instanceof Cell) {
                 Cell cell = (Cell) component;
                 Coordinate coord = cell.getCoordinate();
-                if (!dps.contains(coord)) {
-                    dps.add(coord);
+                if (!dependencies.contains(coord)) {
+                    dependencies.add(coord);
                 }
             }
         }
-        return dps;
+        return dependencies;
     }
 
 }
