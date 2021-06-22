@@ -21,6 +21,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,17 +42,102 @@ public final class SpreadsheetController {
         this.spreadsheet = spreadsheet;
         this.factory = factory;
         this.tokenizer = this.factory.getTokenizerInstance();
+        this.dependenciesMap = new HashMap<Coordinate, Set<Coordinate>>();
     }
 
-    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException {
+    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
         this.setCellContent(cellCoord, content);
     }
 
-    public void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException {
+    public void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
         Coordinate coord = new Coordinate(cellCoord);
-        Content classifiedContent = processStringToContent(coord, content);
-        this.spreadsheet.setContent(coord, classifiedContent);
+        Cell cell = this.spreadsheet.getCell(coord);
+        Content oldContent;
+        if (cell == null) {
 
+            oldContent = null;
+        } else {
+            oldContent = cell.getContent();
+        }
+        Content newContent = processStringToContent(coord, content);
+        this.spreadsheet.setContent(coord, newContent);
+
+        Set<Coordinate> oldDependencies = null, newDependencies = null;
+        if (oldContent instanceof Formula) {
+            oldDependencies = getDependenciesOfFormula((Formula) oldContent);
+        }
+        if (newContent instanceof Formula) {
+            newDependencies = getDependenciesOfFormula((Formula) newContent);
+        }
+
+        //TODO try to do it using COLLECTION UTILS
+        Set<Coordinate> toRemove, toAdd;
+        toRemove = getLeftElements(oldDependencies, newDependencies);
+        toAdd = getLeftElements(newDependencies, oldDependencies);
+
+        removeDependencies(toRemove, coord);
+        addDependencies(toAdd, coord);
+
+//        if(content == null) {
+//            this.spreadsheet.removeCell(coord);
+//        }
+//        
+        update(coord);
+    }
+
+    private void update(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+        Set<Coordinate> toUpdate = this.dependenciesMap.get(coord);
+        if (toUpdate == null) {
+            return;
+        }
+        for (Coordinate c : toUpdate) {
+            Content updatedContent = this.updateFormula(c);
+            this.spreadsheet.setContent(c, updatedContent);
+            update(c);
+        }
+    }
+
+    private Set<Coordinate> getLeftElements(Set<Coordinate> left, Set<Coordinate> right) {
+        if (left == null || left.isEmpty()) {
+            return null;
+        }
+        if (right == null || right.isEmpty()) {
+            return left;
+        }
+
+        Set<Coordinate> difLeft = new HashSet<>();
+        for (Coordinate idx : left) {
+            if (!right.contains(idx)) {
+                difLeft.add(idx);
+            }
+        }
+        return difLeft;
+    }
+
+    private void addDependencies(Set<Coordinate> toAdd, Coordinate index) {
+        if (toAdd == null) {
+            return;
+        }
+        for (Coordinate idx : toAdd) {
+            if (this.dependenciesMap.containsKey(idx)) {
+                this.dependenciesMap.get(idx).add(index);
+            } else {
+                Set<Coordinate> dps = new HashSet<>();
+                dps.add(index);
+                this.dependenciesMap.put(idx, dps);
+            }
+        }
+    }
+
+    private void removeDependencies(Set<Coordinate> toRemove, Coordinate index) {
+        if (toRemove == null) {
+            return;
+        }
+        for (Coordinate idx : toRemove) {
+            if (this.dependenciesMap.containsKey(idx)) {
+                this.dependenciesMap.get(idx).remove(index);
+            }
+        }
     }
 
     public double getCellContentAsDouble(String coord) throws BadCoordinateException, NoNumberException {
@@ -91,7 +177,7 @@ public final class SpreadsheetController {
             List<Token> postfix = ShuntingYard.infixToRpn(tokens);
             List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
             Double formulaResult = FormulaEvaluator.getResult(components, spreadsheet);
-            Formula formula =  factory.createFormula(formulaText, components, formulaResult);
+            Formula formula = factory.createFormula(formulaText, components, formulaResult);
             this.checkCircularDependencies(coord, formula);
             return formula;
 
@@ -100,30 +186,19 @@ public final class SpreadsheetController {
         }
     }
 
-//    private void recomputeDependencies(List<FormulaComponent> components) {
-//    private void checkCircularDependencies(Coordinate cellCoord, List<FormulaComponent> components) throws ContentException {
-//        Set<Coordinate> coordinates = new HashSet<Coordinate>();
-//
-//        for (FormulaComponent component : components) {
-//            if (component instanceof Cell) {
-//                Cell cell = (Cell) component;
-//                coordinates.add(cell.getCoordinate());
-//            }
-//        }
-//        for (Coordinate coord : coordinates) {
-//            Set<Coordinate> otherDependencies = this.dependenciesMap.get(coord);
-//            otherDependencies.add(cellCoord);
-//
-//        }
-//
-//        Set<Coordinate> myDependencies = this.dependenciesMap.get(cellCoord);
-//        for (Coordinate coord : myDependencies) {
-//            Set<Coordinate> dependencies = this.dependenciesMap.get(coord);
-//            if (dependencies.contains(cellCoord)) {
-//                throw new ContentException("Cincular dependy found");
-//            }
-//        }
-//    }
+    private Formula updateFormula(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+        Content content = this.spreadsheet.getCell(coord).getContent();
+        String formulaText = content.getText();
+        tokenizer.tokenize(formulaText);
+        List<Token> tokens = tokenizer.getTokens();
+        List<Token> postfix = ShuntingYard.infixToRpn(tokens);
+        List<FormulaComponent> components = FormulaComponentFactory.generateFormulaComponentList(postfix, this.spreadsheet);
+        Double formulaResult = FormulaEvaluator.getResult(components, this.spreadsheet);
+        Formula formula = factory.createFormula(formulaText, components, formulaResult);
+        this.checkCircularDependencies(coord, formula);
+        return formula;
+    }
+
     private void checkCircularDependencies(Coordinate coord, Formula formula) throws ContentException {
         Set<Coordinate> dependencies = getRecurrentDependenciesOfFormula(formula);
         if (dependencies.contains(coord)) {

@@ -16,7 +16,7 @@ public class MinFunction extends Function{
 
     @Override
     double processFunction(List<Argument> args) {
-        double min = 0;
+        double min = args.get(0).getValue();
         for (Argument arg : args) {
             if (min > arg.getValue()) {
                 min = arg.getValue();
