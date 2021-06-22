@@ -88,11 +88,11 @@ public class ShuntingYard {
                     bracketCount--;
                 }
             }
-            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.COORDINATE) || token.isOfType(TokenEnum.RANGE) || token.isOfType(TokenEnum.COMMA)) {
+            if (token.isOfType(TokenEnum.NUMBER) || token.isOfType(TokenEnum.COORDINATE) || token.isOfType(TokenEnum.RANGE)) {
                 outputList.add(token);
             } else if (token.isOfType(TokenEnum.FUNCTION)) {
                 stack.push(token);
-                Token delimiter = new Token(TokenEnum.DELIMITER, ";");
+                Token delimiter = new Token(TokenEnum.DELIMITER, "|");
                 outputList.add(delimiter);
             } else if (token.isOfType(TokenEnum.OPERATOR)) {
 

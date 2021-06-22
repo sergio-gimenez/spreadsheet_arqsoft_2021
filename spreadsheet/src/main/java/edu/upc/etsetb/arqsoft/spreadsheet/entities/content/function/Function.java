@@ -33,7 +33,7 @@ public abstract class Function implements Operand, Argument {
     
     public static final HashMap<String,Class> functionClassMap = new HashMap<>();
     static {
-        functionClassMap.put(FunctionEnum.SUM.toString(), SumFunction.class);
+        functionClassMap.put(FunctionEnum.SUMA.toString(), SumFunction.class);
         functionClassMap.put(FunctionEnum.AVG.toString(), AvgFunction.class);
         functionClassMap.put(FunctionEnum.MAX.toString(), MaxFunction.class);
         functionClassMap.put(FunctionEnum.MIN.toString(), MinFunction.class);

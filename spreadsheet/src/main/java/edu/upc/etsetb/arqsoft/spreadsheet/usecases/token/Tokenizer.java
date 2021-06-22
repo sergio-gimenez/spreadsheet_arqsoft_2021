@@ -121,7 +121,7 @@ public final class Tokenizer {
         * semi-colon character, comma, function name, and range.
          */
         Tokenizer tokenizer = new Tokenizer();
-        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
+        tokenizer.add("SUMA|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
         tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
         tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
         tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
@@ -130,24 +130,16 @@ public final class Tokenizer {
         tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
         tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
         tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
-        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
-        
-//            
-        Pattern pattern = Pattern.compile("^([a-zA-Z]+)(\\d+)$"); 
-        Matcher matcher = pattern.matcher("AFD34");
-        if(matcher.matches()){
-                    String a = matcher.group(1);
-        System.out.println(a);
+        tokenizer.add(";", TokenEnum.SEPARATOR); //Argument separator
 
-        }
         try {
-           tokenizer.tokenize("A2 + SUM(A1, 2, 3) * (5 - 2)");
-   //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
+            tokenizer.tokenize("(A5*4)/(A2+A2)+SUMA(1;2;3;4;5)");
+            //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
 
             List<Token> tokens = tokenizer.getTokens();
 
             List<Token> postfix = new ArrayList<>();
-                postfix = ShuntingYard.infixToRpn(tokens);
+            postfix = ShuntingYard.infixToRpn(tokens);
 
             String infix = "";
             String strPostfix = "";
@@ -157,11 +149,9 @@ public final class Tokenizer {
             }
 
             System.out.println("\nPostfix:\n" + strPostfix);
-            
-            
+
 //           int res = ShuntingYard.evaluatePostfix(strPostfix);
 //            System.out.println("\nEvaluated postfix = " + res);
-
         } catch (ParserException e) {
             System.out.println(e.getMessage());
         }

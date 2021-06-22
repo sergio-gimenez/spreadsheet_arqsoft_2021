@@ -20,7 +20,7 @@ public class TokenizerGenerator {
 
     public static Tokenizer getInstance() {
         Tokenizer tokenizer = new Tokenizer();
-        tokenizer.add("SUM|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
+        tokenizer.add("SUMA|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
         tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
         tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
         tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
@@ -29,7 +29,7 @@ public class TokenizerGenerator {
         tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
         tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
         tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
-        tokenizer.add(",", TokenEnum.COMMA); //Argument separator
+        tokenizer.add(";", TokenEnum.SEPARATOR); //Argument separator
         return tokenizer;
     }
 }

@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Argument;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponent;
@@ -15,7 +16,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Operand;
  *
  * @author osboxes
  */
-public class Cell implements FormulaComponent, Operand {
+public class Cell implements FormulaComponent, Operand, Argument {
 
     private Content content;
 
