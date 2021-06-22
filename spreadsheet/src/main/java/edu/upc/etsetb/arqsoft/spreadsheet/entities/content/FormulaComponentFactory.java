@@ -37,7 +37,7 @@ public class FormulaComponentFactory {
                     component = new Number(Double.parseDouble(token.sequence));
                     break;
                 case RANGE:
-                    components.addAll(new Range(token.sequence, spreadsheet).getCells());
+                    components.addAll((new Range(token.sequence, spreadsheet).getCells()));
                     break;
                 case OPERATOR:
                     component = OperatorFactory.getInstance(token.sequence);

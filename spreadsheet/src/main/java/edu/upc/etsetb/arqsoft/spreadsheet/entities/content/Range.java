@@ -39,6 +39,8 @@ public class Range {
 
         for (int r = initCoord.getRow(); r <= finalCoord.getRow(); r++) {
             for (int c = initCoord.getColumnAsInt(); c <= finalCoord.getColumnAsInt(); c++) {
+                Coordinate coord = new Coordinate(c, r);
+                Cell cell = spreadsheet.getCell(initCoord);
                 this.range.add(spreadsheet.getCell(new Coordinate(c, r)));
             }
         }

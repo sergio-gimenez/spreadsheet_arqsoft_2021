@@ -14,7 +14,7 @@ import java.util.regex.*;
  *
  * @author osboxes
  */
-public class Coordinate  {
+public class Coordinate {
 
     private static final Pattern COORDINATE_PATTERN = Pattern.compile("^([a-zA-Z]+)(\\d+)$");
     private String column;
@@ -24,8 +24,8 @@ public class Coordinate  {
         this.column = column;
         this.row = row;
     }
-    
-     public Coordinate(int column, int row) {
+
+    public Coordinate(int column, int row) {
         this.column = this.getColumnFromInt(column);
         this.row = row;
     }
@@ -44,36 +44,38 @@ public class Coordinate  {
     public String getColumn() {
         return column;
     }
-    
-     public int getColumnAsInt() {
+
+    public int getColumnAsInt() {
         char[] cs = this.column.toCharArray();
         int sum = 0;
-        for(char c : cs) {
-            sum = sum*26 + c - 'A' + 1;
+        for (char c : cs) {
+            sum = sum * 26 + c - 'A' + 1;
         }
         return sum;
     }
-     
-      private static String getColumnFromInt(int value) {      
+
+    private static String getColumnFromInt(int value) {
         StringBuffer columnBuffer = new StringBuffer();
-        
+
         int res = value;
         int mod;
-        while(res > 26){
-            mod = res%26;
-            columnBuffer.append((char)mod + 'A');
-            res = res/26;
+        while (res > 26) {
+            mod = res % 26;
+            columnBuffer.append((char) mod + 'A');
+            res = res / 26;
         }
-        columnBuffer.append((char)res + 'A');
-       
+        columnBuffer.append(getCharByNumber(res));
+
         return columnBuffer.reverse().toString();
     }
 
+    private static char getCharByNumber(int i) {
+        return i > 0 && i < 27 ? (char) (i + 64) : null;
+    }
 
     public int getRow() {
         return row;
     }
-    
 
     private Matcher getMatcher(String coordinate) {
         return COORDINATE_PATTERN.matcher(coordinate);

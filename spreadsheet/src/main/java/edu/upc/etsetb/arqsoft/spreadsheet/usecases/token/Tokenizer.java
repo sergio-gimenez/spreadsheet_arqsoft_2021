@@ -128,12 +128,12 @@ public final class Tokenizer {
         tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
         tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
         tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
-        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
         tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
+        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
         tokenizer.add(";", TokenEnum.SEPARATOR); //Argument separator
 
         try {
-            tokenizer.tokenize("(A5*4)/(A2+A2)+SUMA(1;2;3;4;5)");
+            tokenizer.tokenize("(A5*4)/(A2+A2)+SUMA(A1;A2;3;4;5;A6:A12)");
             //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
 
             List<Token> tokens = tokenizer.getTokens();
