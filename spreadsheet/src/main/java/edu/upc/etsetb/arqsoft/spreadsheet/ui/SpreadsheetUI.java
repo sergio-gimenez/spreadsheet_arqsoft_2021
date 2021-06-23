@@ -5,6 +5,9 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
 import java.util.Scanner;
 
 /**
@@ -19,7 +22,7 @@ public class SpreadsheetUI {
         this.scanner = new Scanner(System.in);
     }
 
-    public void initDialog() throws InvalidUIException {
+    public void initDialog() throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
         String line;
 
         System.out.println("Select the User Interface:");
@@ -31,13 +34,13 @@ public class SpreadsheetUI {
         this.initUI(line);
     }
 
-    private void initUI(String uiSelected) throws InvalidUIException {
+    private void initUI(String uiSelected) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
         UserInterfaceFactory factory = UserInterfaceFactory.getInstance(uiSelected);
         UserInterface ui = factory.createUserInterface();
         ui.handleDialog();
     }
 
-    public static void main(String[] args) throws InvalidUIException {
+    public static void main(String[] args) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
         SpreadsheetUI spreadsheetUI = new SpreadsheetUI();
         spreadsheetUI.initDialog();
     }
