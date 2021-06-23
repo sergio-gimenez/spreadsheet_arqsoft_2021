@@ -16,8 +16,6 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
  */
 // CHANGE THE PACKAGE AT YOUR CONVENIENCE
 // CHANGE THESE IMPORTS AS PER YOUR OWN PACKAGES
-import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
-import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
 
 // KEEP THESE IMPORTS (for JUnit 4.12)
 import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
