@@ -5,18 +5,23 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
+
 /**
  *
  * @author gerard
  */
-public class UserInterfaceFactory {
-     public static UserInterfaceFactory getInstance(String factoryType) throws InvalidUIException{
-        if(factoryType.equalsIgnoreCase("text")){
-            return new TextUIFactory() ;
+public abstract class UserInterfaceFactory {
+
+    public static UserInterfaceFactory getInstance(String factoryType) throws InvalidUIException {
+        if (factoryType.equalsIgnoreCase("text")) {
+            return new TextUIFactory();
         }
-        throw new InvalidUIException("No concrete factory identified for type: " + factoryType) ;
-        
+        throw new InvalidUIException("No concrete factory identified for type: " + factoryType);
+
     }
-     
-//    public abstract UISpreadsheet createUISpreadsheet();
+
+    public abstract UserInterface createUserInterface();
+
 }

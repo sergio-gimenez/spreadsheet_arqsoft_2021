@@ -78,10 +78,6 @@ public final class SpreadsheetController {
         removeDependencies(toRemove, coord);
         addDependencies(toAdd, coord);
 
-//        if(content == null) {
-//            this.spreadsheet.removeCell(coord);
-//        }
-//        
         update(coord);
     }
 

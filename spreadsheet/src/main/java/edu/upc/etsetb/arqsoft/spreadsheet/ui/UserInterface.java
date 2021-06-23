@@ -5,12 +5,28 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author osboxes
  */
-public interface UserInterface {
-    public void createNewSpreadsheet(String command);
-    
-    
+public abstract class UserInterface {
+
+    protected static final List<String> commands = new ArrayList<>();
+    protected UserInterfaceFactory factory;
+    static {
+        commands.add("C");
+        commands.add("L");
+        commands.add("S");
+        commands.add("E");
+    }
+
+    public abstract void handleDialog();
+
+    public void setFactory(UserInterfaceFactory factory){
+        this.factory = factory;
+    };
+
 }
