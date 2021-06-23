@@ -5,6 +5,9 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,7 @@ public abstract class UserInterface {
         commands.add("E");
     }
 
-    public abstract void handleDialog();
+    public abstract void handleDialog() throws InvalidCommandException, ContentException, BadCoordinateException, NoNumberException;
 
     public void setFactory(UserInterfaceFactory factory){
         this.factory = factory;

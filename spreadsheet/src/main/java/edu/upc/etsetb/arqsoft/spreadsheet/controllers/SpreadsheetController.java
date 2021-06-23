@@ -45,11 +45,11 @@ public final class SpreadsheetController {
         this.dependenciesMap = new HashMap<Coordinate, Set<Coordinate>>();
     }
 
-    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+    public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
         this.setCellContent(cellCoord, content);
     }
 
-    public void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+    private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
         Coordinate coord = new Coordinate(cellCoord);
         Cell cell = this.spreadsheet.getCell(coord);
         Content oldContent;
@@ -70,7 +70,6 @@ public final class SpreadsheetController {
             newDependencies = getDependenciesOfFormula((Formula) newContent);
         }
 
-        //TODO try to do it using COLLECTION UTILS
         Set<Coordinate> toRemove, toAdd;
         toRemove = getLeftElements(oldDependencies, newDependencies);
         toAdd = getLeftElements(newDependencies, oldDependencies);
@@ -81,7 +80,7 @@ public final class SpreadsheetController {
         update(coord);
     }
 
-    private void update(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+    private void update(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException {
         Set<Coordinate> toUpdate = this.dependenciesMap.get(coord);
         if (toUpdate == null) {
             return;
@@ -177,12 +176,12 @@ public final class SpreadsheetController {
             this.checkCircularDependencies(coord, formula);
             return formula;
 
-        } catch (Tokenizer.ParserException | NoNumberException ex) {
+        } catch ( NoNumberException ex) {
             throw new ContentException(ex.getMessage());
         }
     }
 
-    private Formula updateFormula(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException, Tokenizer.ParserException {
+    private Formula updateFormula(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException {
         Content content = this.spreadsheet.getCell(coord).getContent();
         String formulaText = content.getText();
         tokenizer.tokenize(formulaText);

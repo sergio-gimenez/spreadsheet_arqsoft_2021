@@ -19,13 +19,6 @@ import java.util.regex.Pattern;
  */
 public final class Tokenizer {
 
-    public class ParserException extends Exception {
-
-        public ParserException(String msg) {
-            super(msg);
-        }
-    }
-
     private LinkedList<TokenInfo> tokenInfos;
     private LinkedList<Token> tokens;
 
@@ -40,7 +33,7 @@ public final class Tokenizer {
                         Pattern.compile("^(" + regex + ")"), type));
     }
 
-    public void tokenize(String str) throws ParserException {
+    public void tokenize(String str) throws ContentException {
         String s = str.trim();
         tokens.clear();
         while (!s.equals("")) {
@@ -56,7 +49,7 @@ public final class Tokenizer {
                 }
             }
             if (!match) {
-                throw new ParserException("Unexpected character in input: " + s);
+                throw new ContentException("Unexpected character in input: " + s);
             }
         }
     }
@@ -105,57 +98,6 @@ public final class Tokenizer {
             }
         }
         return stack.pop();
-    }
-
-//	// Driver program to test above functions
-//	public static void main(String[] args)
-//	{
-//		String exp="231*+9-";
-//		System.out.println("postfix evaluation: "+evaluatePostfix(exp));
-//	}
-    public static void main(String[] args) throws ContentException {
-
-        /*
-        * For the formulas in a spreadsheet they are: operator, celll identifier,
-        * number, opening round bracket, closing round bracket, colon character,
-        * semi-colon character, comma, function name, and range.
-         */
-        Tokenizer tokenizer = new Tokenizer();
-        tokenizer.add("SUMA|MIN|MAX|AVG", TokenEnum.FUNCTION); // function
-        tokenizer.add("\\(", TokenEnum.LEFT_BRACKET); // open bracket
-        tokenizer.add("\\)", TokenEnum.RIGHT_BRACKET); // close bracket
-        tokenizer.add("[+-]", TokenEnum.OPERATOR); // plus or minus
-        tokenizer.add("[*/]", TokenEnum.OPERATOR); // mult or divide
-        tokenizer.add("\\^", TokenEnum.OPERATOR); // raised
-        tokenizer.add("[0-9]+", TokenEnum.NUMBER); // integer number
-        tokenizer.add("[a-zA-Z]+\\d+:[a-zA-Z]+\\d+", TokenEnum.RANGE); //Cell Range
-        tokenizer.add("[a-zA-Z]+\\d+", TokenEnum.COORDINATE); //cell
-        tokenizer.add(";", TokenEnum.SEPARATOR); //Argument separator
-
-        try {
-            tokenizer.tokenize("(A5*4)/(A2+A2)+SUMA(A1;A2;3;4;5;A6:A12)");
-            //          tokenizer.tokenize("1 + ( 2 * 3 -1 ) -2");
-
-            List<Token> tokens = tokenizer.getTokens();
-
-            List<Token> postfix = new ArrayList<>();
-            postfix = ShuntingYard.infixToRpn(tokens);
-
-            String infix = "";
-            String strPostfix = "";
-            for (Token token : postfix) {
-                System.out.println("" + token.type + " " + token.sequence);
-                strPostfix += token.sequence;
-            }
-
-            System.out.println("\nPostfix:\n" + strPostfix);
-
-//           int res = ShuntingYard.evaluatePostfix(strPostfix);
-//            System.out.println("\nEvaluated postfix = " + res);
-        } catch (ParserException e) {
-            System.out.println(e.getMessage());
-        }
-
     }
 
 }
