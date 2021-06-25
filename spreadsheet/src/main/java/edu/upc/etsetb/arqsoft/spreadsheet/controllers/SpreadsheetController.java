@@ -49,6 +49,10 @@ public final class SpreadsheetController {
         this.setCellContent(cellCoord, content);
     }
 
+    public void createSpreadsheet() throws IllegalAccessException, InstantiationException {
+        this.spreadsheet = spreadsheet.getClass().newInstance();
+    }
+
     private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
         Coordinate coord = new Coordinate(cellCoord);
         Cell cell = this.spreadsheet.getCell(coord);
@@ -176,7 +180,7 @@ public final class SpreadsheetController {
             this.checkCircularDependencies(coord, formula);
             return formula;
 
-        } catch ( NoNumberException ex) {
+        } catch (NoNumberException ex) {
             throw new ContentException(ex.getMessage());
         }
     }

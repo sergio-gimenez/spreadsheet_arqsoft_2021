@@ -9,28 +9,37 @@ import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
-import edu.upc.etsetb.arqsoft.spreadsheet.usecases.token.Tokenizer;
-import java.util.ArrayList;
-import java.util.List;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author osboxes
  */
 public class TextUserInterface extends UserInterface {
-
+    
     private Scanner scanner;
-    private SpreadsheetController controller;
-
+    
     public TextUserInterface() {
         this.scanner = new Scanner(System.in);
+        this.factory = new TextUIFactory();
+        Spreadsheet spreadsheet = this.factory.createSpreadsheet();
+        SpreadsheetFactory spreadsheetFactory = this.factory.createSpreadsheetFactory();
+        this.controller = this.factory.createSpreadsheetController(spreadsheet, spreadsheetFactory);
     }
-
+    
+    /**
+     *
+     * @throws InvalidCommandException
+     * @throws ContentException
+     * @throws BadCoordinateException
+     * @throws NoNumberException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     @Override
-    public void handleDialog() throws InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
+    public void handleDialog() throws InvalidCommandException, ContentException, BadCoordinateException, NoNumberException, IllegalAccessException, InstantiationException {
         boolean exitProgram = false;
         String line;
         while (!exitProgram) {
@@ -41,7 +50,7 @@ public class TextUserInterface extends UserInterface {
             System.out.println("S <SV2 file pathname> - Save the Spreadsheet to a file");
             System.out.println("EXIT - Exit to close the program");
             line = this.scanner.nextLine();
-
+            
             String command, args;
             int separator = line.contains(" ") ? line.indexOf(" ") : line.length();
             command = line.substring(0, separator).toUpperCase();
@@ -49,29 +58,30 @@ public class TextUserInterface extends UserInterface {
                 exitProgram = true;
             } else {
                 args = line.substring(separator).toUpperCase();
-
+                
                 if (commands.contains(command)) {
                     if (command.equals("C")) {
-                        System.out.println("Method not implemented");
+                             this.controller.createSpreadsheet();
                     } else if (command.equals("E")) {
-
-                        this.controller.editSpreadsheet(command, args);
-
+                        String[] argsArray = args.split("\\s");
+                        System.out.println(argsArray[0]);
+                        //this.controller.editSpreadsheet(command, args);
+                        
                     } else if (command.equals("L")) {
                         System.out.println("Method not implemented");
-
+                        
                     } else if (command.equals("S")) {
-
+                        
                         System.out.println("Method not implemented");
                     } else {
                         throw new InvalidCommandException("The command is no recognized by the system");
                     }
-
+                    
                 } else {
                     throw new InvalidCommandException("The command is no recognized by the system");
                 }
             }
         }
     }
-
+    
 }

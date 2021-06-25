@@ -7,11 +7,15 @@ package edu.upc.etsetb.arqsoft.spreadsheet.usecases.parser;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,21 +25,21 @@ import java.util.List;
 public class FilerParser implements Parser {
 
     @Override
-    public List<String[]> loadSpreadsheetFromFile(String path) throws FileNotFoundException, IOException {
+    public List<List<String>> loadSpreadsheetFromFile(String path) throws FileNotFoundException, IOException {
         FileInputStream stream = null;
         try {
             stream = new FileInputStream(path);
         } catch (FileNotFoundException ex) {
             throw new FileNotFoundException();
         }
-        
-         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         String line;
-        List<String[]> cells = new ArrayList<String[]>();
-         try {
+        List<List<String>> content = new ArrayList<>();
+        try {
             while ((line = reader.readLine()) != null) {
-                String[] rows = line.split(";");
-                cells.add(rows);
+                List<String> row = Arrays.asList(line.split(";"));
+                content.add(row);
             }
         } catch (IOException ex) {
             throw new IOException();
@@ -43,14 +47,29 @@ public class FilerParser implements Parser {
         try {
             reader.close();
         } catch (IOException ex) {
-           throw new IOException();
+            throw new IOException();
         }
-        return cells;
+        return content;
     }
 
     @Override
-    public void saveSpreadsheetOnFile(String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveSpreadsheetOnFile(String path, List<List<String>> content) throws IOException, ParserException {
+        if (path.endsWith(".s2v")) {
+            File file = new File(path);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("");
+
+                for (List<String> row : content) {
+                    for (int c = 0; c < row.size(); c++) {
+                        writer.append((row.get(c) != null ? row.get(c) : ""));
+                        writer.append((c == row.size() - 1 ? "\n" : ";"));
+                    }
+                }
+            }
+        } else {
+            throw new ParserException("File extension not allowed");
+        }
+
     }
 
 }

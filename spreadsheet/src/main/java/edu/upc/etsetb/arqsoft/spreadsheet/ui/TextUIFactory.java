@@ -6,7 +6,10 @@
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.DefaultSpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetImpl;
 
 /**
  *
@@ -18,5 +21,20 @@ public class TextUIFactory extends UserInterfaceFactory {
     @Override
     public UserInterface createUserInterface() {
         return new TextUserInterface();
+    }
+    
+    @Override
+    public SpreadsheetFactory createSpreadsheetFactory() {
+        return new DefaultSpreadsheetFactory();
+    }
+
+    @Override
+    public Spreadsheet createSpreadsheet() {
+        return new SpreadsheetImpl();
+    }
+
+    @Override
+   public SpreadsheetController createSpreadsheetController(Spreadsheet spreadsheet, SpreadsheetFactory factory) {
+        return new SpreadsheetController(spreadsheet, factory);
     }
 }

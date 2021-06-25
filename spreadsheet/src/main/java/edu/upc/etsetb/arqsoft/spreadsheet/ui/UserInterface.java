@@ -5,6 +5,7 @@
  */
 package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
+import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.BadCoordinateException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.ContentException;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.NoNumberException;
@@ -18,6 +19,7 @@ import java.util.List;
 public abstract class UserInterface {
 
     protected static final List<String> commands = new ArrayList<>();
+    protected SpreadsheetController controller;
     protected UserInterfaceFactory factory;
     static {
         commands.add("C");
@@ -26,7 +28,7 @@ public abstract class UserInterface {
         commands.add("E");
     }
 
-    public abstract void handleDialog() throws InvalidCommandException, ContentException, BadCoordinateException, NoNumberException;
+    public abstract void handleDialog() throws InvalidCommandException, ContentException, BadCoordinateException, NoNumberException, IllegalAccessException, InstantiationException;
 
     public void setFactory(UserInterfaceFactory factory){
         this.factory = factory;

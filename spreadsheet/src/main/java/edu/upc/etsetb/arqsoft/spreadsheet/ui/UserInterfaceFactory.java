@@ -7,6 +7,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.ui;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.controllers.SpreadsheetController;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
+import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 
 /**
  *
@@ -23,5 +24,11 @@ public abstract class UserInterfaceFactory {
     }
 
     public abstract UserInterface createUserInterface();
+
+    public abstract SpreadsheetFactory createSpreadsheetFactory();
+
+    public abstract Spreadsheet createSpreadsheet();
+
+    public abstract SpreadsheetController createSpreadsheetController(Spreadsheet spreadsheet, SpreadsheetFactory factory);
 
 }
