@@ -21,6 +21,10 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.parser.FileParser;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.parser.Parser;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.parser.ParserException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,10 +62,10 @@ public final class SpreadsheetController {
     public void printSpreadsheet() {
         this.spreadsheet.printCells();
     }
-    
-     public void saveSpreadsheet(String path) {
-         List<List<String>> contents;
-        FileParser.saveSpreadsheetOnFile(path,);
+
+    public void saveSpreadsheet(String path) throws IOException, ParserException {
+        List<List<String>> contents = new ArrayList<>();
+        this.parser.saveSpreadsheetOnFile(path, contents);
     }
 
     private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {

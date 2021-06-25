@@ -7,6 +7,7 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -21,5 +22,7 @@ public interface Spreadsheet {
     public void printCells() ;
     
     public HashMap<Coordinate, Cell> getCellMap();
+    
+    public List<List<String>> getListofCells();       
     
 }

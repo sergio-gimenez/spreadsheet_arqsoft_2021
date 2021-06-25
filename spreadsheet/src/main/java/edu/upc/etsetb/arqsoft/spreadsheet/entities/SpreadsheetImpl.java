@@ -7,7 +7,9 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -55,11 +57,13 @@ public class SpreadsheetImpl implements Spreadsheet {
                 } else {
                     System.out.println(c.getColumn() + c.getRow() + ": " + content.getText());
                 }
-
             }
             System.out.println("\n");
-
         }
     }
 
+    @Override
+    public List<List<String>> getListofCells() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
