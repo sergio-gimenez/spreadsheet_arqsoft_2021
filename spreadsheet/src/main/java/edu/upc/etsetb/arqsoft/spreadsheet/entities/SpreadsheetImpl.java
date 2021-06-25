@@ -8,8 +8,6 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Formula;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  *
@@ -41,29 +39,27 @@ public class SpreadsheetImpl implements Spreadsheet {
 
     @Override
     public void printCells() {
-        Cell cell;
-        Content content;
-        System.out.println("\n");
-        for (Coordinate c : this.cellMap.keySet()) {
-            cell = this.cellMap.get(c);
-            content = cell.getContent();
-            
-            if (content instanceof Formula) {
-                Formula formula = (Formula) content;
-                System.out.println(c.getColumn() + c.getRow() + ": " + formula.getText() + " = " + formula.getValueAsDouble());
-            } else {
-                System.out.println(c.getColumn() + c.getRow() + ": " + content.getText());
+        if (this.cellMap.size() == 0) {
+            System.out.println("The spreadsheet is empty.\n");
+        } else {
+            Cell cell;
+            Content content;
+            System.out.println("\n");
+            for (Coordinate c : this.cellMap.keySet()) {
+                cell = this.cellMap.get(c);
+                content = cell.getContent();
+
+                if (content instanceof Formula) {
+                    Formula formula = (Formula) content;
+                    System.out.println(c.getColumn() + c.getRow() + ": " + formula.getText() + " = " + formula.getValueAsDouble());
+                } else {
+                    System.out.println(c.getColumn() + c.getRow() + ": " + content.getText());
+                }
+
             }
+            System.out.println("\n");
 
         }
-        System.out.println("\n");
-
     }
 
-//    private int getMaxColumn(){
-//        int max = 0;
-//        for(int c=0; c<=cellMap.size(); c++){
-//            
-//        }
-//    }
 }

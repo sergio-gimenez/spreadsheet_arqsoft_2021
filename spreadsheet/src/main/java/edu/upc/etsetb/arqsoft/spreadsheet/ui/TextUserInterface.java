@@ -61,6 +61,8 @@ public class TextUserInterface extends UserInterface {
                 if (commands.contains(command)) {
                     if (command.equals("C")) {
                         this.controller.createSpreadsheet();
+                        this.controller.printSpreadsheet();
+
                     } else if (command.equals("E")) {
                         args = line.substring(separator + 1).toUpperCase();
                         String[] argsArray = args.split(" ");
