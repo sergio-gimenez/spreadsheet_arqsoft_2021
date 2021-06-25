@@ -22,7 +22,7 @@ public class SpreadsheetUI {
         this.scanner = new Scanner(System.in);
     }
 
-    public void initDialog() throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
+    public void initDialog() throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException, IllegalAccessException, InstantiationException {
         String line;
 
         System.out.println("Select the User Interface:");
@@ -34,13 +34,13 @@ public class SpreadsheetUI {
         this.initUI(line);
     }
 
-    private void initUI(String uiSelected) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
+    private void initUI(String uiSelected) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException, IllegalAccessException, InstantiationException {
         UserInterfaceFactory factory = UserInterfaceFactory.getInstance(uiSelected);
         UserInterface ui = factory.createUserInterface();
         ui.handleDialog();
     }
 
-    public static void main(String[] args) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException {
+    public static void main(String[] args) throws InvalidUIException, InvalidCommandException, ContentException, BadCoordinateException, NoNumberException, IllegalAccessException, InstantiationException {
         SpreadsheetUI spreadsheetUI = new SpreadsheetUI();
         spreadsheetUI.initDialog();
     }

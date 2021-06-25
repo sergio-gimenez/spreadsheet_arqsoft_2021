@@ -20,7 +20,6 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -53,12 +52,15 @@ public final class SpreadsheetController {
         this.spreadsheet = spreadsheet.getClass().newInstance();
     }
 
+    public void printSpreadsheet() {
+        this.spreadsheet.printCells();
+    }
+
     private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
         Coordinate coord = new Coordinate(cellCoord);
         Cell cell = this.spreadsheet.getCell(coord);
         Content oldContent;
         if (cell == null) {
-
             oldContent = null;
         } else {
             oldContent = cell.getContent();
@@ -75,8 +77,8 @@ public final class SpreadsheetController {
         }
 
         Set<Coordinate> toRemove, toAdd;
-        toRemove = getLeftElements(oldDependencies, newDependencies);
-        toAdd = getLeftElements(newDependencies, oldDependencies);
+        toRemove = updateDependencies(oldDependencies, newDependencies);
+        toAdd = updateDependencies(newDependencies, oldDependencies);
 
         removeDependencies(toRemove, coord);
         addDependencies(toAdd, coord);
@@ -96,7 +98,7 @@ public final class SpreadsheetController {
         }
     }
 
-    private Set<Coordinate> getLeftElements(Set<Coordinate> left, Set<Coordinate> right) {
+    private Set<Coordinate> updateDependencies(Set<Coordinate> left, Set<Coordinate> right) {
         if (left == null || left.isEmpty()) {
             return null;
         }

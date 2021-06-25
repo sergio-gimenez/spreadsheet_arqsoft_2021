@@ -18,6 +18,8 @@ public interface Spreadsheet {
     
     public void setContent(Coordinate coordinate, Content content);
     
+    public void printCells() ;
+    
     public HashMap<Coordinate, Cell> getCellMap();
     
 }

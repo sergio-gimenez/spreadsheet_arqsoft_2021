@@ -57,15 +57,16 @@ public class TextUserInterface extends UserInterface {
             if (command.equals("EXIT")) {
                 exitProgram = true;
             } else {
-                args = line.substring(separator + 1).toUpperCase();
 
                 if (commands.contains(command)) {
                     if (command.equals("C")) {
                         this.controller.createSpreadsheet();
                     } else if (command.equals("E")) {
+                        args = line.substring(separator + 1).toUpperCase();
                         String[] argsArray = args.split(" ");
                         if (argsArray.length == 2) {
                             this.controller.editSpreadsheet(argsArray[0], argsArray[1]);
+                            this.controller.printSpreadsheet();
                         } else {
                             throw new InvalidCommandException("Invalid arguments for this command");
                         }

@@ -7,6 +7,8 @@ package edu.upc.etsetb.arqsoft.spreadsheet.entities;
 
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.Content;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -15,7 +17,7 @@ import java.util.HashMap;
 public class SpreadsheetImpl implements Spreadsheet {
 
     private HashMap<Coordinate, Cell> cellMap;
-    
+
     public SpreadsheetImpl() {
         this.cellMap = new HashMap<Coordinate, Cell>();
     }
@@ -36,4 +38,22 @@ public class SpreadsheetImpl implements Spreadsheet {
         this.cellMap.put(coordinate, cell);
     }
 
+    @Override
+    public void printCells() {
+        Iterator it = cellMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            System.out.println(pair.getKey().hashCode() + " = " + pair.getValue().toString());
+//            Coordinate coord = (Coordinate) pair.getKey().getConstructor().newInstance();
+//            System.out.println(coord.getColumn());
+            it.remove();
+        }
+    }
+
+//    private int getMaxColumn(){
+//        int max = 0;
+//        for(int c=0; c<=cellMap.size(); c++){
+//            
+//        }
+//    }
 }
