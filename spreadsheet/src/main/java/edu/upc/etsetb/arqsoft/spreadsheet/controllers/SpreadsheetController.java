@@ -83,10 +83,10 @@ public final class SpreadsheetController {
         removeDependencies(toRemove, coord);
         addDependencies(toAdd, coord);
 
-        update(coord);
+        updateSpreadsheet(coord);
     }
 
-    private void update(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException {
+    private void updateSpreadsheet(Coordinate coord) throws ContentException, BadCoordinateException, NoNumberException {
         Set<Coordinate> toUpdate = this.dependenciesMap.get(coord);
         if (toUpdate == null) {
             return;
@@ -94,7 +94,7 @@ public final class SpreadsheetController {
         for (Coordinate c : toUpdate) {
             Content updatedContent = this.updateFormula(c);
             this.spreadsheet.setContent(c, updatedContent);
-            update(c);
+            updateSpreadsheet(c);
         }
     }
 
