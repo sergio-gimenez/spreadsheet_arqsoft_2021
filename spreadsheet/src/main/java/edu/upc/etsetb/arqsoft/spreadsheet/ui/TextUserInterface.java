@@ -18,9 +18,9 @@ import java.util.Scanner;
  * @author osboxes
  */
 public class TextUserInterface extends UserInterface {
-    
+
     private Scanner scanner;
-    
+
     public TextUserInterface() {
         this.scanner = new Scanner(System.in);
         this.factory = new TextUIFactory();
@@ -28,7 +28,7 @@ public class TextUserInterface extends UserInterface {
         SpreadsheetFactory spreadsheetFactory = this.factory.createSpreadsheetFactory();
         this.controller = this.factory.createSpreadsheetController(spreadsheet, spreadsheetFactory);
     }
-    
+
     /**
      *
      * @throws InvalidCommandException
@@ -50,38 +50,41 @@ public class TextUserInterface extends UserInterface {
             System.out.println("S <SV2 file pathname> - Save the Spreadsheet to a file");
             System.out.println("EXIT - Exit to close the program");
             line = this.scanner.nextLine();
-            
+
             String command, args;
             int separator = line.contains(" ") ? line.indexOf(" ") : line.length();
             command = line.substring(0, separator).toUpperCase();
             if (command.equals("EXIT")) {
                 exitProgram = true;
             } else {
-                args = line.substring(separator).toUpperCase();
-                
+                args = line.substring(separator + 1).toUpperCase();
+
                 if (commands.contains(command)) {
                     if (command.equals("C")) {
-                             this.controller.createSpreadsheet();
+                        this.controller.createSpreadsheet();
                     } else if (command.equals("E")) {
-                        String[] argsArray = args.split("\\s");
-                        System.out.println(argsArray[0]);
-                        //this.controller.editSpreadsheet(command, args);
-                        
+                        String[] argsArray = args.split(" ");
+                        if (argsArray.length == 2) {
+                            this.controller.editSpreadsheet(argsArray[0], argsArray[1]);
+                        } else {
+                            throw new InvalidCommandException("Invalid arguments for this command");
+                        }
+
                     } else if (command.equals("L")) {
                         System.out.println("Method not implemented");
-                        
+
                     } else if (command.equals("S")) {
-                        
+
                         System.out.println("Method not implemented");
                     } else {
                         throw new InvalidCommandException("The command is no recognized by the system");
                     }
-                    
+
                 } else {
                     throw new InvalidCommandException("The command is no recognized by the system");
                 }
             }
         }
     }
-    
+
 }
