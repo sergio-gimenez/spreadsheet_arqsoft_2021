@@ -68,6 +68,10 @@ public final class SpreadsheetController {
         this.parser.saveSpreadsheetOnFile(path, contents);
     }
 
+    public List<List<String>> loadSpreadsheet(String path) throws IOException, ParserException {
+        return this.parser.loadSpreadsheetFromFile(path);
+    }
+
     private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
         Coordinate coord = new Coordinate(cellCoord);
         Cell cell = this.spreadsheet.getCell(coord);
