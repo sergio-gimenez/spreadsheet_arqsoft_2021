@@ -13,7 +13,9 @@ import java.util.List;
  *
  * @author gerard
  */
-public interface Parser {
-    public List<List<String>> loadSpreadsheetFromFile(String path)throws FileNotFoundException, IOException;
-    public void saveSpreadsheetOnFile(String path, List<List<String>> content) throws ParserException, IOException;
+public abstract class Parser {
+
+    public abstract List<List<String>> loadSpreadsheetFromFile(String path) throws FileNotFoundException, IOException;
+
+    public abstract void saveSpreadsheetOnFile(String path, List<List<String>> content) throws ParserException, IOException;
 }

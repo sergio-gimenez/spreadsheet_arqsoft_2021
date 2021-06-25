@@ -22,7 +22,10 @@ import java.util.List;
  *
  * @author gerard
  */
-public class FilerParser implements Parser {
+public class FileParser extends Parser {
+
+    public FileParser() {
+    }
 
     @Override
     public List<List<String>> loadSpreadsheetFromFile(String path) throws FileNotFoundException, IOException {

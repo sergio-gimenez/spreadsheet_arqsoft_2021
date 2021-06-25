@@ -20,6 +20,7 @@ import edu.upc.etsetb.arqsoft.spreadsheet.entities.Spreadsheet;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.SpreadsheetFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.entities.content.FormulaComponentFactory;
 import edu.upc.etsetb.arqsoft.spreadsheet.usecases.formulas.evaluator.FormulaEvaluator;
+import edu.upc.etsetb.arqsoft.spreadsheet.usecases.parser.FileParser;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,12 +37,14 @@ public final class SpreadsheetController {
     private SpreadsheetFactory factory;
     private Tokenizer tokenizer;
     private Map<Coordinate, Set<Coordinate>> dependenciesMap;
+    private Parser parser;
 
     public SpreadsheetController(Spreadsheet spreadsheet, SpreadsheetFactory factory) {
         this.spreadsheet = spreadsheet;
         this.factory = factory;
         this.tokenizer = this.factory.getTokenizerInstance();
         this.dependenciesMap = new HashMap<Coordinate, Set<Coordinate>>();
+        this.parser = new FileParser();
     }
 
     public void editSpreadsheet(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
@@ -54,6 +57,11 @@ public final class SpreadsheetController {
 
     public void printSpreadsheet() {
         this.spreadsheet.printCells();
+    }
+    
+     public void saveSpreadsheet(String path) {
+         List<List<String>> contents;
+        FileParser.saveSpreadsheetOnFile(path,);
     }
 
     private void setCellContent(String cellCoord, String content) throws ContentException, BadCoordinateException, NoNumberException {
